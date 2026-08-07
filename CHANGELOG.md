@@ -18,6 +18,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Mock data layer: `data/student.ts`, `data/challenges.ts` (incl. Day 12 "Build Your Portfolio Hero"), `data/achievements.ts`
 - Component directories `components/ui/` and `components/bento/` (Bento-ready)
 - README — added setup instructions and scaffolded route table
+- **Design System Foundation (Phase 4)**:
+  - Custom color palette: Ivory Stillness, Warm Parchment, Sage Drift, Charcoal, Muted Gray, Soft Border (warm, calm, intelligent, premium)
+  - Bento components: `BentoCard`, `BentoGrid`, `BentoSection` (18px radius, mobile-first, subtle borders/shadows)
+  - Shared UI components: `Button` (5 variants), `Badge` (6 variants), `ProgressBar`
+  - Typography setup: Inter font family, fluid type scale, responsive line heights
+  - Globals.css: Design tokens, semantic color aliases, dark mode support, reduced motion
+  - Layout.tsx: Inter font with variable injection
 
 ### Changed
 - `CLAUDE.md` rewritten to distinguish confirmed requirements, project decisions, proposed defaults, and unresolved questions (Session: 2026-08-08-02)
@@ -38,6 +45,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `README.md` — added decided technology stack
 - `CLAUDE.md` — proposed technology defaults marked as decided (ADR-003) for stack items
 - `PROMPTS.md` — logged stack and product decision session
+- `app/globals.css` — complete design system overhaul (Session: 2026-08-08-08): custom color palette, Bento components, typography
+- `app/layout.tsx` — Inter font injection via Next.js metadata API
 
 ---
 

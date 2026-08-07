@@ -100,6 +100,64 @@
 
 ---
 
+### Session 2026-08-08-08 — Design System Foundation (Phase 4)
+
+**Objective**: Create the reusable visual foundation for ABTalks PS1 — design tokens, Bento components, shared UI components, and typography setup. No landing/dashboard/day pages; only the design system.
+
+**Prompt(s)**:
+> "Continue ABTalks PS1 development. We are entering Phase 4: Design System Foundation. Before modifying code: read CLAUDE.md, Docs/requirements.md, Docs/architecture.md, Docs/decisions.md, Docs/prototype-analysis.md. Goal: Create the reusable visual foundation before building pages. Do NOT build: landing page, dashboard page, day page. Only create the design system. Tasks: 1) Create design tokens in globals.css with color palette: Ivory Stillness, Warm Parchment, Sage Drift, Charcoal, Muted Gray, Soft Border — warm, calm, intelligent, premium feel. 2) Create Bento components (BentoCard, BentoGrid, BentoSection) with mobile-first, responsive, reusable variants, subtle borders, soft shadows, 18-24px radius. 3) Create Button, Badge, ProgressBar. 4) Add typography setup. 5) Verify lint + build. 6) Update PROMPTS.md and CHANGELOG.md."
+
+**Result**:
+- **Design tokens** (`app/globals.css`): Custom color palette (OKLCH values):
+  - `--ivory-stillness`: 0.985 0.003 85 — soft off-white background
+  - `--warm-parchment`: 0.96 0.015 75 — warm secondary background
+  - `--sage-drift`: 0.72 0.06 145 — primary accent (calm sage)
+  - `--charcoal`: 0.22 0.01 255 — primary text
+  - `--muted-gray`: 0.55 0.01 260 — muted text
+  - `--soft-border`: 0.88 0.008 80 — subtle borders
+  - Dark mode with warm (not harsh) colors; semantic aliases mapped
+  - Typography scale (fluid type using clamp), line heights, font weights
+
+- **Bento components** (`components/bento/`):
+  - `BentoCard`: Flexible card with 4 variants (default, interactive, accent, minimal), 4 padding options, 18px radius
+  - `BentoGrid`: Mobile-first responsive grid (1→2→3→4 columns), configurable gaps
+  - `BentoSection`: Section wrapper with optional header (title/description), 3 variants (default, inset, full)
+  - All mobile-first with responsive padding
+
+- **Shared UI components** (`components/ui/`):
+  - `Button`: 5 variants (primary/sage, secondary/parchment, outline, ghost, link), 4 sizes, loading state
+  - `Badge`: 6 variants (default/sage, secondary/parchment, outline, success, warning, error), pill shape
+  - `ProgressBar`: 3 sizes, customizable value/label/percentage, accessible ARIA attributes
+
+- **Typography** (`app/layout.tsx`): Inter font family (variable) via Next.js metadata API; antialiased rendering
+
+- **Verification**:
+  - `npm run lint` — passed (0 errors)
+  - `npm run build` — passed; all routes generated successfully
+
+**Files Changed**:
+- `app/globals.css` — Complete design system overhaul with custom color palette, typography scale, dark mode, utilities
+- `app/layout.tsx` — Inter font injection with metadata configuration
+- `components/bento/bento-card.tsx` — New: BentoCard component
+- `components/bento/bento-grid.tsx` — New: BentoGrid component
+- `components/bento/bento-section.tsx` — New: BentoSection component
+- `components/bento/index.ts` — New: Barrel exports
+- `components/ui/button.tsx` — New: Button component with 5 variants
+- `components/ui/badge.tsx` — New: Badge component with 6 variants
+- `components/ui/progress-bar.tsx` — New: ProgressBar component
+- `components/ui/index.ts` — New: Barrel exports
+
+**Tests/Checks Performed**:
+- `npm run lint` — passed with 0 errors, 0 warnings (fixed unused imports/variables)
+- `npm run build` — passed (6 pages generated: `/`, `/_not-found`, `/dashboard`, `/day/[id]`)
+
+**Related Commit**: uncommitted (per instructions — no commit yet)
+
+**Breeth Entries**: None new (design system foundation)
+
+**Blockers / Open Questions**:
+- None — design system foundation is complete and verified
+
 ### Session 2026-08-08-05 — Product & UX audit (analysis only, no code)
 
 **Objective**: Perform a product + UX audit of the Emergent reference prototype and the original ABTalks experience; produce a comparison against the confirmed PS1 requirements; recommend the final direction and feature priorities; document in `Docs/prototype-analysis.md`. **No application code was created.**
