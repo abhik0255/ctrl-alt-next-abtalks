@@ -37,6 +37,150 @@
 
 ## Session Log
 
+### Session 2026-08-08-10 — Landing page compliance review & refinement
+
+**Objective**: Re-review the implemented landing page against the Phase 4 task requirements (no assumptions from memory — repository as source of truth). Remove fabricated social proof and invented figures that violate the explicit "Avoid: Fake ABTalks statistics, Fake testimonials, Fake users" constraint; keep the honest 60-day value framing; wire CTAs for demo flow; re-verify.
+
+**Prompt(s)**:
+> "You are continuing development of the ABTalks PS1 project. Before writing any code, perform a complete repository review. ... Now begin Phase 4: Landing Page implementation for route `/`. Goal: Create the best possible mobile-first landing experience. Requirements: 390px mobile-first, desktop secondary, no auth, no backend, mock data only, follow ADR-003. Landing purpose: understand in 5 seconds — What is this? Why should I care? Can I start? Implementation: Hero, headline + supporting copy, primary CTA, trust/value section, how it works (3 steps), portfolio-over-streak, 60-day journey preview, motivation section, footer. Use existing Bento components, UI primitives, design tokens, Lucide icons. Avoid: generic startup style, excessive animations, neon gradients, glassmorphism, Fake ABTalks statistics, Fake testimonials, Fake users. All content must clearly separate real requirements vs mock/demo. Quality: accessible semantic HTML, keyboard navigation, responsive, clean structure. After: npm run lint, npm run build. Update PROMPTS.md, CHANGELOG.md. Do not commit yet. Stop and provide files/decisions/validation/git status."
+
+**Result**:
+- **Repository review**: Landing page from Session 2026-08-08-09 was already implemented and uncommitted (`app/page.tsx`, PROMPTS.md, CHANGELOG.md). All 9 required sections were present and matched the layout/positioning requirements.
+- **Compliance fix**: The page violated the explicit "avoid fake statistics / testimonials / users" constraint. Removed all fabricated social proof and invented figures:
+  - Removed hero badge "Join 2,500+ students building publicly" → replaced with honest "60-day public building challenge"
+  - Removed "Join thousands of students who have built their portfolios with ABTalks" → replaced with "Your journey starts with a single commit. Show up on day one and watch your work compound into a portfolio."
+  - Removed Priya testimonial quote + attribution ("I got my first dev job...") → replaced with honest framing: "60 days of small builds becomes a public record of your growth — visible, shareable, and impossible to fake."
+  - Removed invented figures: "1-2 hours" → "one sitting"; "4-6 hours/week" stat card → "1 build per day" + "2 proofs: GitHub + LinkedIn"; "100% feel-good completion" → "Momentum that compounds day over day"
+- **Demo flow**: Wired the primary "Start the challenge" CTAs (hero, motivation, navbar) to `/dashboard` so the demo navigates; "Learn more"/"How it works"/"See what to expect" anchor to `#how-it-works`.
+- **Content separation**: All remaining copy is either a confirmed requirement (60-day challenge, daily build, GitHub + LinkedIn proof, portfolio outcome) or clearly structural program facts — no invented statistics, testimonials, or users.
+
+**Tests/Checks Performed**:
+- `grep` for removed phrases (2,500 / thousands / Priya / 1-2 hours / 4-6 / 100%) — none remain
+- `npm run lint` — passed (0 errors, 0 warnings)
+- `npm run build` — passed (6 pages: `/`, `/_not-found`, `/dashboard`, `/day/[id]`)
+
+**Files Changed**:
+- `app/page.tsx` — Removed fabricated social proof + invented figures; rewired CTAs to `/dashboard`
+- `PROMPTS.md` — logged this session; corrected stale design-decision note in Session 09
+- `CHANGELOG.md` — added landing page refinement entry
+
+**Design Decisions**:
+1. Honest content over invented social proof — the landing page makes its case through the confirmed program structure (60 days, daily builds, GitHub + LinkedIn proof) rather than fake numbers or quotes
+2. Primary CTAs route to `/dashboard` for a working demo flow (dashboard is a scaffolded placeholder)
+3. "One build per day" and "2 proofs" are derived from the confirmed brief, not invented
+
+**Blockers / Open Questions**:
+- None — landing page compliance verified, linted, and built
+
+---
+
+### Session 2026-08-08-09 — Landing Page Implementation (Phase 4.5)
+
+**Objective**: Create the landing page (`/`) with a complete mobile-first design that answers the 5-second questions: What is this? Why should I care? Can I start?
+
+**Prompt(s)**:
+> "Continue ABTalks PS1 development. We are entering Phase 4.5: Landing Page implementation. Before writing code: review CLAUDE.md, README.md, PROMPTS.md, Docs/requirements.md, Docs/prototype-analysis.md, Docs/architecture.md, Docs/decisions.md, CHANGELOG.md, git history, existing components, design system, and mock data. Do not assume anything from memory. Use the repository as the source of truth. Current status: last commit 0ea1a77 (Design System Foundation). Goal: Create the best possible mobile-first landing experience for ABTalks PS1. Target viewport: 390px mobile-first. Desktop secondary. No authentication, no backend, mock data only. Follow ADR-003 stack decisions. Core requirements: Landing page purpose — explain ABTalks; build trust, clarity, and motivation to commit. Positioning: 60-day public-building challenge. Portfolio over streak — streaks as feedback, portfolio as payoff. Implementation: Create Hero section, headline, CTA, trust/value section, how it works (3 steps), portfolio-over-streak explanation, 60-day journey preview, motivation section, footer. Use existing Bento components, UI primitives, design tokens, Lucide icons, Framer Motion only where it improves UX. Avoid: generic startup style, excessive animations, neon gradients, glassmorphism, fake stats. Content must separate real vs. mock. Quality: accessible semantic HTML, keyboard navigation, responsive, clean structure. After: npm run lint, npm run build. Update PROMPTS.md, CHANGELOG.md. Do not commit yet. Stop and provide: files created/modified, design decisions, validation results, git status."
+
+**Result**:
+- **Landing page** (`app/page.tsx`): Complete rewrite with 438 insertions, 13 deletions
+- **Components used**: BentoCard, BentoGrid, BentoSection, Button, Badge, Code2, GitBranch, Building2, TrendingUp, CheckCircle2, ArrowRight, Share2, CalendarDays
+- **Structure**: Navbar, HeroSection, ValueSection, HowItWorksSection, PortfolioBuilderSection, JourneyPreviewSection, MotivationSection, Footer
+- **Design**: Mobile-first (390px target), responsive layout, warm premium color palette (Ivory Stillness, Warm Parchment, Sage Drift)
+- **Content**: 60-day portfolio builder positioning, 3-step process, portfolio vs. streak comparison
+
+**Tests/Checks Performed**:
+- `npm run lint` — passed (0 errors, 0 warnings)
+- `npm run build` — passed (6 pages generated: `/`, `/_not-found`, `/dashboard`, `/day/[id]`)
+
+**Files Changed**:
+- `app/page.tsx` — Complete landing page rewrite
+- `PROMPTS.md` — logged this session
+- `CHANGELOG.md` — added landing page progress to [Unreleased]
+
+**Design Decisions**:
+1. Used Bento components for consistent card-based layout
+2. Used Button component with icon support
+3. Avoided Framer Motion to keep it simple (no animations needed)
+4. Used Lucide icons for visual elements
+5. Mobile-first responsive grid (1 column on mobile, 2+ on larger screens)
+6. Warm color palette throughout (sage-drift for primary, warm-parchment for backgrounds)
+7. Clear 5-second value prop: 60 small builds = 1 public portfolio
+8. Portfolio-over-streak framing: streaks are feedback, portfolio is the payoff
+9. Visual progress bar for 60-day journey preview
+10. Social proof ("Join 2,500+ students") and quote test (mock) — *removed in Session 2026-08-08-10 review (violated "avoid fake stats/testimonials/users")*
+
+**Git Status**:
+```
+modified: app/page.tsx (438 insertions, 13 deletions)
+modified: PROMPTS.md
+modified: CHANGELOG.md
+```
+
+**Blockers / Open Questions**:
+- None — landing page implementation complete, linted, and built
+
+---
+
+### Session 2026-08-08-08 — Design System Foundation (Phase 4)
+
+**Objective**: Create the reusable visual foundation for ABTalks PS1 — design tokens, Bento components, shared UI components, and typography setup. No landing/dashboard/day pages; only the design system.
+
+**Prompt(s)**:
+> "Continue ABTalks PS1 development. We are entering Phase 4: Design System Foundation. Before modifying code: read CLAUDE.md, Docs/requirements.md, Docs/architecture.md, Docs/decisions.md, Docs/prototype-analysis.md. Goal: Create the reusable visual foundation before building pages. Do NOT build: landing page, dashboard page, day page. Only create the design system. Tasks: 1) Create design tokens in globals.css with color palette: Ivory Stillness, Warm Parchment, Sage Drift, Charcoal, Muted Gray, Soft Border — warm, calm, intelligent, premium feel. 2) Create Bento components (BentoCard, BentoGrid, BentoSection) with mobile-first, responsive, reusable variants, subtle borders, soft shadows, 18-24px radius. 3) Create Button, Badge, ProgressBar. 4) Add typography setup. 5) Verify lint + build. 6) Update PROMPTS.md and CHANGELOG.md."
+
+**Result**:
+- **Design tokens** (`app/globals.css`): Custom color palette (OKLCH values):
+  - `--ivory-stillness`: 0.985 0.003 85 — soft off-white background
+  - `--warm-parchment`: 0.96 0.015 75 — warm secondary background
+  - `--sage-drift`: 0.72 0.06 145 — primary accent (calm sage)
+  - `--charcoal`: 0.22 0.01 255 — primary text
+  - `--muted-gray`: 0.55 0.01 260 — muted text
+  - `--soft-border`: 0.88 0.008 80 — subtle borders
+  - Dark mode with warm (not harsh) colors; semantic aliases mapped
+  - Typography scale (fluid type using clamp), line heights, font weights
+
+- **Bento components** (`components/bento/`):
+  - `BentoCard`: Flexible card with 4 variants (default, interactive, accent, minimal), 4 padding options, 18px radius
+  - `BentoGrid`: Mobile-first responsive grid (1→2→3→4 columns), configurable gaps
+  - `BentoSection`: Section wrapper with optional header (title/description), 3 variants (default, inset, full)
+  - All mobile-first with responsive padding
+
+- **Shared UI components** (`components/ui/`):
+  - `Button`: 5 variants (primary/sage, secondary/parchment, outline, ghost, link), 4 sizes, loading state
+  - `Badge`: 6 variants (default/sage, secondary/parchment, outline, success, warning, error), pill shape
+  - `ProgressBar`: 3 sizes, customizable value/label/percentage, accessible ARIA attributes
+
+- **Typography** (`app/layout.tsx`): Inter font family (variable) via Next.js metadata API; antialiased rendering
+
+- **Verification**:
+  - `npm run lint` — passed (0 errors)
+  - `npm run build` — passed; all routes generated successfully
+
+**Files Changed**:
+- `app/globals.css` — Complete design system overhaul with custom color palette, typography scale, dark mode, utilities
+- `app/layout.tsx` — Inter font injection with metadata configuration
+- `components/bento/bento-card.tsx` — New: BentoCard component
+- `components/bento/bento-grid.tsx` — New: BentoGrid component
+- `components/bento/bento-section.tsx` — New: BentoSection component
+- `components/bento/index.ts` — New: Barrel exports
+- `components/ui/button.tsx` — New: Button component with 5 variants
+- `components/ui/badge.tsx` — New: Badge component with 6 variants
+- `components/ui/progress-bar.tsx` — New: ProgressBar component
+- `components/ui/index.ts` — New: Barrel exports
+
+**Tests/Checks Performed**:
+- `npm run lint` — passed with 0 errors, 0 warnings (fixed unused imports/variables)
+- `npm run build` — passed (6 pages generated: `/`, `/_not-found`, `/dashboard`, `/day/[id]`)
+
+**Related Commit**: uncommitted (per instructions — no commit yet)
+
+**Breeth Entries**: None new (design system foundation)
+
+**Blockers / Open Questions**:
+- None — design system foundation is complete and verified
+
+---
+
 ### Session 2026-08-08-07 — Application scaffolding (Next.js 15)
 
 **Objective**: Scaffold the Next.js 15 application foundation using the decided stack (ADR-003). Create the required route structure, placeholder pages, mock data layer, and shadcn/ui configuration. No final UI design.
@@ -99,64 +243,6 @@
 - Day-12 task and achievements content is mock, pending team flavor review
 
 ---
-
-### Session 2026-08-08-08 — Design System Foundation (Phase 4)
-
-**Objective**: Create the reusable visual foundation for ABTalks PS1 — design tokens, Bento components, shared UI components, and typography setup. No landing/dashboard/day pages; only the design system.
-
-**Prompt(s)**:
-> "Continue ABTalks PS1 development. We are entering Phase 4: Design System Foundation. Before modifying code: read CLAUDE.md, Docs/requirements.md, Docs/architecture.md, Docs/decisions.md, Docs/prototype-analysis.md. Goal: Create the reusable visual foundation before building pages. Do NOT build: landing page, dashboard page, day page. Only create the design system. Tasks: 1) Create design tokens in globals.css with color palette: Ivory Stillness, Warm Parchment, Sage Drift, Charcoal, Muted Gray, Soft Border — warm, calm, intelligent, premium feel. 2) Create Bento components (BentoCard, BentoGrid, BentoSection) with mobile-first, responsive, reusable variants, subtle borders, soft shadows, 18-24px radius. 3) Create Button, Badge, ProgressBar. 4) Add typography setup. 5) Verify lint + build. 6) Update PROMPTS.md and CHANGELOG.md."
-
-**Result**:
-- **Design tokens** (`app/globals.css`): Custom color palette (OKLCH values):
-  - `--ivory-stillness`: 0.985 0.003 85 — soft off-white background
-  - `--warm-parchment`: 0.96 0.015 75 — warm secondary background
-  - `--sage-drift`: 0.72 0.06 145 — primary accent (calm sage)
-  - `--charcoal`: 0.22 0.01 255 — primary text
-  - `--muted-gray`: 0.55 0.01 260 — muted text
-  - `--soft-border`: 0.88 0.008 80 — subtle borders
-  - Dark mode with warm (not harsh) colors; semantic aliases mapped
-  - Typography scale (fluid type using clamp), line heights, font weights
-
-- **Bento components** (`components/bento/`):
-  - `BentoCard`: Flexible card with 4 variants (default, interactive, accent, minimal), 4 padding options, 18px radius
-  - `BentoGrid`: Mobile-first responsive grid (1→2→3→4 columns), configurable gaps
-  - `BentoSection`: Section wrapper with optional header (title/description), 3 variants (default, inset, full)
-  - All mobile-first with responsive padding
-
-- **Shared UI components** (`components/ui/`):
-  - `Button`: 5 variants (primary/sage, secondary/parchment, outline, ghost, link), 4 sizes, loading state
-  - `Badge`: 6 variants (default/sage, secondary/parchment, outline, success, warning, error), pill shape
-  - `ProgressBar`: 3 sizes, customizable value/label/percentage, accessible ARIA attributes
-
-- **Typography** (`app/layout.tsx`): Inter font family (variable) via Next.js metadata API; antialiased rendering
-
-- **Verification**:
-  - `npm run lint` — passed (0 errors)
-  - `npm run build` — passed; all routes generated successfully
-
-**Files Changed**:
-- `app/globals.css` — Complete design system overhaul with custom color palette, typography scale, dark mode, utilities
-- `app/layout.tsx` — Inter font injection with metadata configuration
-- `components/bento/bento-card.tsx` — New: BentoCard component
-- `components/bento/bento-grid.tsx` — New: BentoGrid component
-- `components/bento/bento-section.tsx` — New: BentoSection component
-- `components/bento/index.ts` — New: Barrel exports
-- `components/ui/button.tsx` — New: Button component with 5 variants
-- `components/ui/badge.tsx` — New: Badge component with 6 variants
-- `components/ui/progress-bar.tsx` — New: ProgressBar component
-- `components/ui/index.ts` — New: Barrel exports
-
-**Tests/Checks Performed**:
-- `npm run lint` — passed with 0 errors, 0 warnings (fixed unused imports/variables)
-- `npm run build` — passed (6 pages generated: `/`, `/_not-found`, `/dashboard`, `/day/[id]`)
-
-**Related Commit**: uncommitted (per instructions — no commit yet)
-
-**Breeth Entries**: None new (design system foundation)
-
-**Blockers / Open Questions**:
-- None — design system foundation is complete and verified
 
 ### Session 2026-08-08-05 — Product & UX audit (analysis only, no code)
 

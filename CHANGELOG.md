@@ -25,6 +25,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Typography setup: Inter font family, fluid type scale, responsive line heights
   - Globals.css: Design tokens, semantic color aliases, dark mode support, reduced motion
   - Layout.tsx: Inter font with variable injection
+- **Landing Page Implementation (Phase 4.5)**:
+  - Full landing page with mobile-first design (390px target)
+  - Hero section with headline, CTA, value proposition
+  - Trust/value section explaining 60-day portfolio builder
+  - How it works section with 3-step process
+  - Portfolio-over-streak comparison
+  - 60-day journey preview with visual progress bar
+  - Motivation section
+  - Footer
+  - Responsive layout (mobile first, desktop secondary)
+- **Landing page compliance refinement (Phase 4.5)**: removed fabricated social proof and invented figures (fake statistics, testimonial, user) per task constraints; replaced with honest 60-day program framing; wired primary CTAs to `/dashboard`; re-verified lint + build (Session: 2026-08-08-10)
 
 ### Changed
 - `CLAUDE.md` rewritten to distinguish confirmed requirements, project decisions, proposed defaults, and unresolved questions (Session: 2026-08-08-02)
