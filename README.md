@@ -44,4 +44,23 @@ We are redesigning ABTalks so that a student unfamiliar with the program can qui
 | `Docs/development-workflow.md` | Development process and conventions |
 
 ## Getting Started
-Application scaffolding is the next phase; instructions will be added once the stack is decided.
+
+Requires Node.js 20+ (developed on Node 24 / npm 11).
+
+```bash
+npm install    # install dependencies
+npm run dev    # start the dev server (http://localhost:3000)
+npm run lint   # ESLint
+npm run build  # production build
+npm run start  # serve the production build
+```
+
+### Required routes (scaffolded)
+| Path | Status |
+|------|--------|
+| `/` | Landing — placeholder |
+| `/dashboard` | Student dashboard — placeholder, mock data |
+| `/day/12` | Challenge day — placeholder, mock task "Build Your Portfolio Hero" |
+
+### Stack (ADR-003)
+Next.js 15 App Router · TypeScript · Tailwind CSS v4 · shadcn/ui (radix, nova preset) · Framer Motion · Lucide React. Deploy target: Vercel. Data: local mock files under `data/`.

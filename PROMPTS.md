@@ -37,6 +37,39 @@
 
 ## Session Log
 
+### Session 2026-08-08-07 — Application scaffolding (Next.js 15)
+
+**Objective**: Scaffold the Next.js 15 application foundation using the decided stack (ADR-003). Create the required route structure, placeholder pages, mock data layer, and shadcn/ui configuration. No final UI design.
+
+**Prompt(s)**:
+> "We are entering Phase 3: Application Scaffolding. ... Initialize Next.js project using the decided stack. Configure TypeScript, Tailwind CSS, shadcn/ui, ESLint. Create structure: app/ (page.tsx, dashboard/page.tsx, day/[id]/page.tsx), components/ui/, components/bento/, data/ (student.ts, challenges.ts, achievements.ts), lib/utils.ts. Basic placeholder pages only — no final UI, no fake polished components, no unnecessary dependencies. Create initial mock data (clearly marked). Update README/CHANGELOG/PROMPTS. Do not commit yet."
+
+**Result**:
+- Scaffolded with `create-next-app@15.5.23` (Next 15.5.23 / React 19.1 / TS 5 / Tailwind v4 / ESLint 9) into a temp dir (repo root is non-empty), then moved files into the repo root. Kept our README.md and .gitignore; removed the scaffold's nested .git.
+- Initialized shadcn/ui: `npx shadcn@latest init -b radix -p nova` (radix-nova preset, Lucide + Geist). Created `components.json`, `lib/utils.ts`, updated `app/globals.css` and fonts.
+- Added `framer-motion@13` (decided in ADR-003).
+- Created placeholder pages: `/` (landing), `/dashboard` (renders mock student data), `/day/[id]` (renders mock task; day 12 = "Build Your Portfolio Hero").
+- Created mock data: `data/student.ts`, `data/challenges.ts` (60 days, day 12 real sample), `data/achievements.ts` (PD-02 set).
+- Created empty `components/ui/` and `components/bento/` dirs (Bento-ready).
+- Updated README (setup + route table), CHANGELOG, this log.
+
+**Tests/Checks Performed**:
+- `npm run lint` — passed (no errors)
+- `npm run build` — passed; routes `/`, `/dashboard`, `/day/[id]` generated
+- `npm view` — confirmed Next 15 vs 16 (ADR requires Next 15; pinned create-next-app@15.5.23)
+
+**Related Commit**: uncommitted (per instructions — no commit yet)
+
+**Breeth Entries**: None new (scaffold; stack/decisions already recorded in session 06).
+
+**Blockers / Open Questions**:
+- 3 npm audit warnings from fresh scaffold (unaddressed; not blocking)
+- npm allow-scripts blocks postinstall scripts for `sharp` and `unrs-resolver` (non-blocking for scaffold; sharp only matters for next/image optimization at runtime)
+- shadcn CLI now defaults to `radix-nova`; classic radix path used per ADR-003 intent
+- Bento components and final UI are the next build phase
+
+---
+
 ### Session 2026-08-08-06 — Record stack and product decisions (no code)
 
 **Objective**: Record the technology stack decision (ADR-003) and product decisions (mock Day 12 task, achievements) in the documentation. No application code created.

@@ -13,6 +13,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Engineering foundation documentation (CLAUDE.md, PROMPTS.md, README.md, CHANGELOG.md)
 - Documentation structure (Docs/requirements.md, Docs/architecture.md, Docs/decisions.md, Docs/development-workflow.md)
 - `.gitignore` — stack-independent ignore rules (foundation checkpoint, Session: 2026-08-08-04)
+- Scaffolded Next.js 15 application (App Router, TypeScript, Tailwind CSS v4, shadcn/ui radix-nova, Framer Motion, Lucide React) — Session: 2026-08-08-07
+- Placeholder pages: `/` (landing), `/dashboard`, `/day/[id]`
+- Mock data layer: `data/student.ts`, `data/challenges.ts` (incl. Day 12 "Build Your Portfolio Hero"), `data/achievements.ts`
+- Component directories `components/ui/` and `components/bento/` (Bento-ready)
+- README — added setup instructions and scaffolded route table
 
 ### Changed
 - `CLAUDE.md` rewritten to distinguish confirmed requirements, project decisions, proposed defaults, and unresolved questions (Session: 2026-08-08-02)
