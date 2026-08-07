@@ -37,6 +37,66 @@
 
 ## Session Log
 
+### Session 2026-08-08-06 — Record stack and product decisions (no code)
+
+**Objective**: Record the technology stack decision (ADR-003) and product decisions (mock Day 12 task, achievements) in the documentation. No application code created.
+
+**Prompt(s)**:
+> "Continue ABTalks PS1 development from the current documentation phase. Before writing any application code: read and verify the docs; review project state; record the remaining product decisions. Create ADR-003 Technology Stack Decision: Next.js 15 App Router / TypeScript / Tailwind CSS / shadcn/ui + custom Bento components / Framer Motion / Lucide React / Vercel / local mock JSON only, no auth, no database, no backend. Also record Mock Day 12 task 'Build Your Portfolio Hero' and achievements (First Build, Consistency Builder, Halfway Mark, Portfolio Builder, Challenge Complete). Update Docs/architecture.md, Docs/decisions.md, README.md if needed, CHANGELOG.md, PROMPTS.md. Do not create app code. Show files changed, decisions created, git status. Stop and wait."
+
+**Result**:
+- `Docs/decisions.md` — added **ADR-003 (Technology Stack Decision, Accepted)** with context/decision/consequences/alternatives; added **PD-01** (mock Day 12 task: "Build Your Portfolio Hero") and **PD-02** (achievement set: First Build, Consistency Builder, Halfway Mark, Portfolio Builder, Challenge Complete)
+- `Docs/architecture.md` — header updated (stack decided); project context now lists the decided stack; §7 table marked decided (ADR-003) including auth/db/backend = none; §9 open questions resolved by ADR-003, testing left TBD
+- `README.md` — added "Technology (Decided — ADR-003)" section
+- `CLAUDE.md` — proposed technology defaults updated: stack items now marked ✅ Decided (ADR-003); state mgmt, forms, linting remain TBD *(extra consistency update, flagged)*
+- `CHANGELOG.md` — added decision entries under [Unreleased]
+- `PROMPTS.md` — logged this session
+
+**Tests/Checks Performed**:
+- `git status` — only docs changed; confirmed no source code / package files
+- Verified decisions recorded consistently across decisions.md, architecture.md, README.md, CLAUDE.md
+
+**Related Commit**: uncommitted (per instructions — no commit this phase)
+
+**Breeth Entries**: Recorded ADR-003 stack decision + product decisions (PD-01/PD-02) via `record_fact`; verified via `search_graph`.
+
+**Blockers / Open Questions**:
+- Testing tooling still TBD (deferred decision)
+- Application scaffolding is the next phase
+- Day-12 task and achievements content is mock, pending team flavor review
+
+---
+
+### Session 2026-08-08-05 — Product & UX audit (analysis only, no code)
+
+**Objective**: Perform a product + UX audit of the Emergent reference prototype and the original ABTalks experience; produce a comparison against the confirmed PS1 requirements; recommend the final direction and feature priorities; document in `Docs/prototype-analysis.md`. **No application code was created.**
+
+**Prompt(s)**:
+> "PROJECT PHASE: PRODUCT ANALYSIS ONLY. Do NOT write application code. Do NOT create React components. Do NOT install packages. ... Read CLAUDE.md, PROMPTS.md, Docs/requirements.md, Docs/decisions.md, README.md. Perform a PRODUCT + UX AUDIT: analyze the current Emergent prototype, the original ABTalks experience (observed facts vs design assumptions vs improvements), build a requirement comparison table, identify differentiators, recommend final product vision / core features / things to remove / things not worth building. Create Docs/prototype-analysis.md with the specified structure. Update PROMPTS.md. Do NOT commit."
+
+**Result**:
+- Attempted to audit the Emergent prototype (`momentum-tracker-120.preview.emergentagent.com`) via static fetch, data probes, and external indexes. Result: it is a **private, client-rendered SPA** (content loads in an iframe from Emergent's platform; `noindex, nofollow`; no public data endpoints). Internal UI is **not statically observable** — recorded honestly rather than fabricated.
+- Confirmed via web search that **no authoritative public reference material exists** for the original ABTalks program; analysis is grounded in the confirmed hackathon briefing only, with assumptions explicitly marked.
+- Created `Docs/prototype-analysis.md` (Executive Summary, Method & Observability, Current Prototype Review, Original ABTalks Review, Requirement Comparison, Strengths To Keep, Problems To Fix, Recommended Final Direction, Features Priority P0/P1/P2, Design Principles, Blockers).
+- Recommended direction: reframe from "Momentum Tracker / keep your streak" to "**60-day portfolio builder**" — streaks as feedback, the compounding public portfolio (GitHub + LinkedIn artifacts) as the payoff. Flagship FR-007 idea: a "Your Portfolio in 60 Days" artifact timeline.
+- No application/source code, components, or packages were created.
+
+**Tests/Checks Performed**:
+- `curl` probes of `/`, `/dashboard`, `/day/12`, `robots.txt`, `sitemap.xml`, `/api/*`, `/data.json` (all SPA catch-all or 404)
+- Wayback Machine + web searches for prototype and ABTalks reference material (no snapshots/authoritative results)
+
+**Related Commit**: uncommitted (per instructions — no commit this phase)
+
+**Breeth Entries**: None written this session (analysis-only; no new durable facts beyond what was already seeded). Project phase remains: foundation complete, application not started.
+
+**Blockers / Open Questions**:
+- No authoritative ABTalks material (see §10 of the analysis) — would re-run analysis if the team has the ABTalks site/brief/curriculum
+- Emergent prototype internals unobservable — screenshots would enable a deeper §2 review
+- Mock day-12 task theme and mock achievement set to be decided by the team
+- Technology stack still pending (separate decision phase)
+
+---
+
 ### Session 2026-08-08-04 — Foundation documentation checkpoint
 
 **Objective**: Replace documentation placeholders with confirmed PS1 requirements; update CLAUDE.md, README.md, CHANGELOG.md; record ADR-001/ADR-002; add a stack-independent `.gitignore`; keep architecture as a template; log sessions honestly; seed Breeth with confirmed project context; validate; report; STOP before committing.

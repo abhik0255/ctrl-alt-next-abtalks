@@ -50,16 +50,20 @@ These are decisions made by the team (not imposed by the hackathon):
 The following are **suggested defaults for evaluation only**. They become real decisions only when the team confirms them (recorded as ADRs in `Docs/decisions.md`). Do not implement based on these until confirmed.
 
 ### Technology Stack
-| Area | Proposed Default | Status |
-|------|-----------------|--------|
-| Framework | Next.js App Router | ⚠️ TBD |
-| Language | TypeScript (strict) | ⚠️ TBD |
-| Styling | Tailwind CSS v4 | ⚠️ TBD |
-| UI Components | React Aria + custom | ⚠️ TBD |
+| Area | Decision | Status |
+|------|----------|--------|
+| Framework | Next.js 15 (App Router) | ✅ Decided (ADR-003) |
+| Language | TypeScript | ✅ Decided (ADR-003) |
+| Styling | Tailwind CSS | ✅ Decided (ADR-003) |
+| UI Components | shadcn/ui + custom Bento components | ✅ Decided (ADR-003) |
+| Animation | Framer Motion | ✅ Decided (ADR-003) |
+| Icons | Lucide React | ✅ Decided (ADR-003) |
+| Data | Local mock JSON only | ✅ Decided (ADR-003) |
+| Auth / DB / Backend | None | ✅ Decided (ADR-003, out of scope) |
+| Deployment | Vercel | ✅ Decided (ADR-003) |
 | State Mgmt | React Context + Server State | ⚠️ TBD |
 | Forms | React Hook Form + Zod | ⚠️ TBD |
 | Linting | ESLint (next/core-web-vitals) + Prettier | ⚠️ TBD |
-| Deployment | Vercel | ⚠️ TBD |
 
 ### Testing
 | Area | Proposed Default | Status |

@@ -1,6 +1,6 @@
 # Architecture — ABTalks PS1
 
-> **Status**: ⚠️ **TEMPLATE** — No architecture decisions made yet. The technology stack is TBD and will be chosen in a dedicated decision phase, then recorded as ADRs in `Docs/decisions.md`. The C4 diagrams below are placeholders and must not be treated as real architecture.
+> **Status**: Stack **decided** (ADR-003) — Next.js 15 App Router + TypeScript + Tailwind CSS + shadcn/ui + Framer Motion + Lucide React, deployed on Vercel, local mock JSON data, no auth/database/backend. Detailed component architecture is designed during implementation; the C4 diagrams below remain placeholders until then.
 
 ---
 
@@ -9,7 +9,8 @@
 - **Hackathon**: ABTalks AI Hackathon — Problem Statement 1 (PS1), Redesign ABTalks
 - **Team**: CTRL ALT NEXT
 - **Viewport target**: 390px mobile (evaluator viewport); mobile-first, desktop secondary
-- **Data**: Mock data only; no real backend, auth, or database
+- **Stack (ADR-003)**: Next.js 15 App Router · TypeScript · Tailwind CSS · shadcn/ui + custom Bento components · Framer Motion · Lucide React · Vercel
+- **Data**: Local mock JSON only; no real backend, auth, or database
 - **Required routes**: `/`, `/dashboard`, `/day/12`
 - **Out of scope**: authentication, real user accounts, production database, recruiter dashboard, admin panel
 
@@ -76,16 +77,20 @@ C4Component
 
 ---
 
-## 7. Technology Stack Decisions
-*Will be populated as ADRs in `Docs/decisions.md` are recorded.*
+## 7. Technology Stack (Decided — ADR-003)
 
-| Layer | Proposed | Status | ADR |
+| Layer | Decision | Status | ADR |
 |-------|----------|--------|-----|
-| Framework | Next.js App Router | ⚠️ TBD | ADR-TBD |
-| Language | TypeScript (strict) | ⚠️ TBD | ADR-TBD |
-| Styling | Tailwind CSS v4 | ⚠️ TBD | ADR-TBD |
-| Testing | Vitest, RTL, Playwright | ⚠️ TBD | ADR-TBD |
-| Deployment | Vercel | ⚠️ TBD | ADR-TBD |
+| Framework | Next.js 15 (App Router) | ✅ Decided | ADR-003 |
+| Language | TypeScript | ✅ Decided | ADR-003 |
+| Styling | Tailwind CSS | ✅ Decided | ADR-003 |
+| UI components | shadcn/ui + custom Bento components | ✅ Decided | ADR-003 |
+| Animation | Framer Motion | ✅ Decided | ADR-003 |
+| Icons | Lucide React | ✅ Decided | ADR-003 |
+| Data | Local mock JSON only | ✅ Decided | ADR-003 |
+| Auth / DB / Backend | None | ✅ Decided (out of scope) | ADR-003 |
+| Deployment | Vercel | ✅ Decided | ADR-003 |
+| Testing | TBD (decision deferred) | ⚠️ TBD | — |
 
 ---
 
@@ -103,15 +108,21 @@ C4Component
 ---
 
 ## 9. Open Architecture Questions
-- [ ] Which framework? (proposed: Next.js — not confirmed)
-- [ ] Which styling approach? (proposed: Tailwind CSS v4 — not confirmed)
-- [ ] Do we need a database? (confirmed out of scope: no production DB)
-- [ ] What AI/ML capabilities are needed?
-- [ ] Real-time features? (WebSockets, SSE)
-- [ ] Authentication? (confirmed out of scope)
-- [ ] File upload / processing needed?
-- [ ] Internationalization needed?
-- [ ] Offline / PWA requirements?
+
+**Resolved by ADR-003 and the confirmed brief**:
+- ✅ Framework: Next.js 15 App Router (ADR-003)
+- ✅ Styling: Tailwind CSS (ADR-003)
+- ✅ Database: none (local mock JSON; production DB out of scope)
+- ✅ Authentication: none (out of scope)
+- ✅ Real-time features: none (not required)
+- ✅ File upload / processing: none (proof is GitHub/LinkedIn links)
+- ✅ Internationalization: none (not required)
+- ✅ Offline / PWA: none (not required)
+- ✅ AI/ML capabilities: none prescribed by PS1
+
+**Still open**:
+- Testing tooling (unit/component/e2e) — deferred
+- Component/route-level structure details — designed during implementation
 
 ---
 

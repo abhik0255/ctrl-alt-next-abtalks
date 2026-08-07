@@ -28,6 +28,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `Docs/decisions.md` — ADR-001 (main-only branching) and ADR-002 (single repo with `Docs/`) recorded as project workflow decisions
 - `Docs/architecture.md` — added project context and confirmed route map; kept as TBD template
 - `PROMPTS.md` — logged read-only audit session and foundation documentation checkpoint session
+- `Docs/decisions.md` — recorded ADR-003 (technology stack) and product decisions PD-01 (mock Day 12 task) / PD-02 (achievements)
+- `Docs/architecture.md` — technology stack marked decided (ADR-003); open architecture questions resolved
+- `README.md` — added decided technology stack
+- `CLAUDE.md` — proposed technology defaults marked as decided (ADR-003) for stack items
+- `PROMPTS.md` — logged stack and product decision session
 
 ---
 

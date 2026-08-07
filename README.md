@@ -21,6 +21,12 @@ We are redesigning ABTalks so that a student unfamiliar with the program can qui
 ✅ **Foundation/documentation complete** — confirmed requirements, project decisions, and workflow are documented.
 🚧 **Application not started** — no UI or application code exists yet.
 
+## Technology (Decided — ADR-003)
+- **Next.js 15 (App Router)** · TypeScript · Tailwind CSS
+- **shadcn/ui + custom Bento components** · Framer Motion · Lucide React
+- **Deployment**: Vercel
+- **Data**: local mock JSON only — no authentication, no database, no backend
+
 ## Team
 - **Team Name**: CTRL ALT NEXT
 - **AI Assistant**: Claude Code (Anthropic)
