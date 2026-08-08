@@ -56,6 +56,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Next-step guidance (dashboard / tomorrow preview)
   - Mobile-first 390px design, portfolio-over-homework framing
   - Uses existing Bento components, UI primitives, design tokens, Lucide icons
+- **Portfolio Journey Experience (Phase 7A)**:
+  - Centralized journey data source (data/journey.ts)
+  - "Your Portfolio in 60 Days" timeline with milestones and artifact cards
+  - Weekly progress grid with GitHub/LinkedIn artifact indicators
+  - Locked and unlocked achievements with progress bars
+  - Missed-day recovery demo state (toggle On Track / Missed Day)
+  - Unified progress data across dashboard and challenge day
+  - Single source of truth for journey state — no duplicated values
 - **Team contribution & AI workflow documentation** (Session: 2026-08-08-1550):
   - `CONTRIBUTORS.md` — team CTRL ALT NEXT, contributor roles and responsibilities (Abhi Kashyap — lead developer; Anuj Kumar — review/validation support)
   - `Docs/ai-workflow.md` — AI tool usage (Claude Code, ChatGPT) and the human review workflow

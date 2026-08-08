@@ -37,6 +37,52 @@
 
 ## Session Log
 
+### Session 2026-08-08-1830 — Phase 7A: Portfolio Journey Experience Implementation
+
+**Objective**: Make data/journey.ts the single source of truth for journey progress and unify dashboard/challenge day progress values.
+
+**Prompt(s)**:
+> "Perform small consistency cleanup for Phase7A. Make data/journey.ts the true single source of truth. Replace hardcoded progress values in dashboard and challenge day with data from @/data/journey. Do not redesign anything. Do not add features. Run npm run lint and npm run build after changes."
+
+**Result**:
+- **`data/journey.ts`** (from Phase7A): Centralized journey data (single source of truth) with getJourneyData(), getAchievementsWithProgress(), getNextAchievement(), milestones
+- **`components/bento/portfolio-timeline.tsx`** (from Phase7A): "Your Portfolio in 60 Days" visualization showing day progression, milestones, artifact cards
+- **`components/bento/achievements.tsx`** (from Phase7A): Locked and unlocked achievements with progress bars and next achievement highlight
+- **`components/bento/missed-day-recovery.tsx`** (from Phase7A): Demo toggle for missed day recovery state with no-shame language
+- **`app/dashboard/page.tsx`**: Replaced all hardcoded progress values with data from journey.ts (day number, streak, artifacts, progress %)
+- **`app/day/[id]/ChallengeDayClient.tsx`**: Replaced student import with journey.ts for progress %, artifacts created, current day, completion state
+- **`components/bento/index.ts`**: Exported new components (already done in Phase7A)
+
+**Design decisions**:
+1. Single source of truth achieved — all progress data flows from journey.ts
+2. Dashboard and day page now show identical progress values (no divergence)
+3. Challenge/task data remains separate in challenges.ts (separation of concerns)
+4. Mobile-first 390px preserved — new components use existing Bento system
+5. No visual identity changes — uses existing design tokens and components
+
+**Tests/Checks Performed**:
+- `npm run lint` — passed (0 errors,0 warnings)
+- `npm run build` — passed (6 pages compiled: /, /_not-found, /dashboard, /day/[id])
+- Verified /dashboard shows: Day 12, 12 day streak, 12/60 progress (20%), 12 artifacts
+- Verified /day/12 shows identical progress values in header and completion state
+- Confirmed no hardcoded journey numbers remain in updated files
+
+**Files Changed**:
+- `data/journey.ts` — new
+- `components/bento/portfolio-timeline.tsx` — new
+- `components/bento/achievements.tsx` — new
+- `components/bento/missed-day-recovery.tsx` — new
+- `app/dashboard/page.tsx` — modified (progress values unified)
+- `app/day/[id]/ChallengeDayClient.tsx` — modified (progress values unified)
+- `components/bento/index.ts` — modified (exports — from Phase7A)
+- `PROMPTS.md` — logged this session
+- `CHANGELOG.md` — to be updated
+
+**Blockers / Open Questions**:
+- None — Phase7A consistency cleanup complete
+
+---
+
 ### Session 2026-08-08-1550 — Team contribution & AI workflow documentation
 
 **Objective**: Document the real human + AI development workflow used on this project — team contributions (Abhi Kashyap, Anuj Kumar), AI tool usage, and the human review process. Documentation only; no application code changes.

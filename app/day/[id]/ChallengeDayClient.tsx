@@ -23,7 +23,7 @@ import {
   Code2,
   Trophy,
 } from "lucide-react";
-import { student } from "@/data/student";
+import { getJourneyData } from "@/data/journey";
 
 interface DayData {
   day: number;
@@ -49,7 +49,8 @@ interface ChallengeDayClientProps {
  */
 
 function ChallengeDayClient({ day, dayNum }: ChallengeDayClientProps) {
-  const progressPercent = Math.round((student.totalCompleted / 60) * 100);
+  const journey = getJourneyData();
+  const progressPercent = journey.progressPercent;
 
   if (!day) {
     return (
@@ -68,7 +69,7 @@ function ChallengeDayClient({ day, dayNum }: ChallengeDayClientProps) {
     );
   }
 
-  const isCompleted = student.currentDay > dayNum || (student.currentDay === dayNum && student.streak > 0);
+  const isCompleted = journey.currentDayNum > dayNum || (journey.currentDayNum === dayNum && journey.student.streak > 0);
 
   return (
     <main className="min-h-screen bg-ivory-stillness">
@@ -108,7 +109,7 @@ function ChallengeDayClient({ day, dayNum }: ChallengeDayClientProps) {
               </div>
             </div>
             <ProgressBar
-              value={student.totalCompleted}
+              value={journey.artifactsCreated}
               max={60}
               showLabel={false}
               showPercentage={true}
@@ -355,6 +356,8 @@ function ProofSubmissionForm({ day, isCompleted }: { day: DayData; isCompleted: 
 
 /* --- Completion State Component --- */
 function CompletionState({ day }: { day: DayData }) {
+  const journey = getJourneyData();
+
   return (
     <div className="space-y-6">
       <div className="text-center py-8">
@@ -411,7 +414,7 @@ function CompletionState({ day }: { day: DayData }) {
           Day {day.day} complete — {60 - day.day} challenges to go
         </p>
         <ProgressBar
-          value={day.day}
+          value={journey.artifactsCreated}
           max={60}
           showLabel={false}
           showPercentage={true}
@@ -419,7 +422,7 @@ function CompletionState({ day }: { day: DayData }) {
           className="h-4"
         />
         <p className="text-center text-sm text-muted-foreground">
-          Portfolio artifacts: {day.day} of 60
+          Portfolio artifacts: {journey.artifactsCreated} of 60
         </p>
       </div>
 
