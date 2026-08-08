@@ -11,7 +11,6 @@ import { PortfolioTimeline, Achievements, MissedDayRecovery } from "@/components
 import {
   Flame,
   Home,
-  Sparkles,
   ArrowRight,
   Share2,
 } from "lucide-react";
@@ -311,52 +310,28 @@ function DashboardPage() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4, delay: 2.5, ease: "easeOut" }}
         >
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <motion.div
-              className="flex items-center gap-3"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.3, delay: 2.6 }}
-            >
-              <span className="text-sm text-muted-foreground">
-                Need inspiration?
-              </span>
-              <Link href="/community">
-                <motion.div
-                  whileHover={{ scale: 1.05, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <Button size="sm" variant="outline">
-                    <Sparkles className="h-4 w-4 mr-1" />
-                    Community
-                  </Button>
-                </motion.div>
-              </Link>
-            </motion.div>
-            <motion.div
-              className="flex items-center gap-3"
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.3, delay: 2.7 }}
-            >
-              <span className="text-sm text-muted-foreground">
-                Want to share your progress?
-              </span>
-              <Link href="/share">
-                <motion.div
-                  whileHover={{ scale: 1.05, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <Button size="sm" variant="outline">
-                    <Share2 className="h-4 w-4 mr-1" />
-                    Share your journey
-                  </Button>
-                </motion.div>
-              </Link>
-            </motion.div>
-          </div>
+          <motion.div
+            className="flex items-center gap-3"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.3, delay: 2.6 }}
+          >
+            <span className="text-sm text-muted-foreground">
+              Want to share your progress?
+            </span>
+            <Link href={`/day/${journey.currentDayNum}`}>
+              <motion.div
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ duration: 0.2 }}
+              >
+                <Button size="sm" variant="outline">
+                  <Share2 className="h-4 w-4 mr-1" />
+                  Share today&apos;s work
+                </Button>
+              </motion.div>
+            </Link>
+          </motion.div>
         </motion.div>
       </div>
     </motion.main>
