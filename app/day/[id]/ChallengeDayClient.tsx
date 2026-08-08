@@ -2,6 +2,7 @@
 
 import { useState, FormEvent } from "react";
 import Link from "next/link";
+import { motion, useReducedMotion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { BentoCard } from "@/components/bento/bento-card";
@@ -51,6 +52,7 @@ interface ChallengeDayClientProps {
 function ChallengeDayClient({ day, dayNum }: ChallengeDayClientProps) {
   const journey = getJourneyData();
   const progressPercent = journey.progressPercent;
+  const shouldReduceMotion = useReducedMotion();
 
   if (!day) {
     return (
@@ -72,10 +74,20 @@ function ChallengeDayClient({ day, dayNum }: ChallengeDayClientProps) {
   const isCompleted = journey.currentDayNum > dayNum || (journey.currentDayNum === dayNum && journey.student.streak > 0);
 
   return (
-    <main className="min-h-screen bg-ivory-stillness">
+    <motion.main
+      className="min-h-screen bg-ivory-stillness"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.3, ease: "easeOut" }}
+    >
       <div className="mx-auto max-w-md p-4 sm:p-6">
         {/* Progress context header */}
-        <div className="mb-6 flex items-center justify-between">
+        <motion.div
+          className="mb-6 flex items-center justify-between"
+          initial={{ opacity: 0, y: shouldReduceMotion ? 0 : -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+        >
           <div className="flex items-center gap-2">
             <Link href="/dashboard" className="text-muted-foreground hover:text-foreground">
               <Home className="h-5 w-5" />
@@ -87,120 +99,150 @@ function ChallengeDayClient({ day, dayNum }: ChallengeDayClientProps) {
           <Badge variant="secondary" className="text-xs">
             {progressPercent}% complete
           </Badge>
-        </div>
+        </motion.div>
 
         {/* 1. Challenge Header */}
-        <BentoSection
-          title={`Day ${day.day} of 60`}
-          description={day.summary}
-          variant="full"
-          className="mb-6"
+        <motion.div
+          initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
         >
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-sage-drift/10">
-                <CalendarDays className="h-5 w-5 text-sage-drift" />
+          <BentoSection
+            title={`Day ${day.day} of 60`}
+            description={day.summary}
+            variant="full"
+            className="mb-6"
+          >
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-sage-drift/10">
+                  <CalendarDays className="h-5 w-5 text-sage-drift" />
+                </div>
+                <div>
+                  <p className="text-lg font-semibold text-foreground">{day.title}</p>
+                  <p className="text-sm text-muted-foreground">
+                    {isCompleted ? "Completed" : "In progress"}
+                  </p>
+                </div>
               </div>
-              <div>
-                <p className="text-lg font-semibold text-foreground">{day.title}</p>
-                <p className="text-sm text-muted-foreground">
-                  {isCompleted ? "Completed" : "In progress"}
-                </p>
-              </div>
+              <ProgressBar
+                value={journey.artifactsCreated}
+                max={60}
+                showLabel={false}
+                showPercentage={true}
+                size="sm"
+                className="w-40 h-2"
+              />
             </div>
-            <ProgressBar
-              value={journey.artifactsCreated}
-              max={60}
-              showLabel={false}
-              showPercentage={true}
-              size="sm"
-              className="w-40 h-2"
-            />
-          </div>
-        </BentoSection>
+          </BentoSection>
+        </motion.div>
 
         {/* 2. Task Explanation */}
-        <BentoSection title="The Task" description="What to build and why it matters" variant="full" className="mb-6">
-          <BentoCard variant="default" padding="lg">
-            <div className="space-y-6">
-              <div>
-                <h3 className="mb-2 text-lg font-semibold text-foreground flex items-center gap-2">
-                  <Lightbulb className="h-5 w-5 text-sage-drift" />
-                  What to build
-                </h3>
-                <p className="text-muted-foreground leading-relaxed">{day.description}</p>
-              </div>
+        <motion.div
+          initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, ease: "easeOut", delay: 0.1 }}
+        >
+          <BentoSection title="The Task" description="What to build and why it matters" variant="full" className="mb-6">
+            <BentoCard variant="default" padding="lg">
+              <div className="space-y-6">
+                <div>
+                  <h3 className="mb-2 text-lg font-semibold text-foreground flex items-center gap-2">
+                    <Lightbulb className="h-5 w-5 text-sage-drift" />
+                    What to build
+                  </h3>
+                  <p className="text-muted-foreground leading-relaxed">{day.description}</p>
+                </div>
 
-              <div className="pt-4 border-t border-soft-border">
-                <h3 className="mb-2 text-lg font-semibold text-foreground flex items-center gap-2">
-                  <Trophy className="h-5 w-5 text-award" />
-                  Why it matters
-                </h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  This challenge builds a real portfolio artifact. Your GitHub repo and LinkedIn post
-                  become visible proof of your skills — something recruiters can actually see and trust.
-                </p>
-              </div>
+                <div className="pt-4 border-t border-soft-border">
+                  <h3 className="mb-2 text-lg font-semibold text-foreground flex items-center gap-2">
+                    <Trophy className="h-5 w-5 text-award" />
+                    Why it matters
+                  </h3>
+                  <p className="text-muted-foreground leading-relaxed">
+                    This challenge builds a real portfolio artifact. Your GitHub repo and LinkedIn post
+                    become visible proof of your skills — something recruiters can actually see and trust.
+                  </p>
+                </div>
 
-              <div className="pt-4 border-t border-soft-border">
-                <h3 className="mb-2 text-lg font-semibold text-foreground flex items-center gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-sage-drift" />
-                  Expected outcome
-                </h3>
-                <ul className="space-y-2 text-muted-foreground">
-                  <li className="flex items-center gap-2">
-                    <CircleCheck className="h-4 w-4 text-sage-drift shrink-0" />
-                    A working, deployed project you can show
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CircleCheck className="h-4 w-4 text-sage-drift shrink-0" />
-                    Clean, readable code on GitHub
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CircleCheck className="h-4 w-4 text-sage-drift shrink-0" />
-                    A LinkedIn post sharing what you learned
-                  </li>
-                </ul>
+                <div className="pt-4 border-t border-soft-border">
+                  <h3 className="mb-2 text-lg font-semibold text-foreground flex items-center gap-2">
+                    <CheckCircle2 className="h-5 w-5 text-sage-drift" />
+                    Expected outcome
+                  </h3>
+                  <ul className="space-y-2 text-muted-foreground">
+                    <li className="flex items-center gap-2">
+                      <CircleCheck className="h-4 w-4 text-sage-drift shrink-0" />
+                      A working, deployed project you can show
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CircleCheck className="h-4 w-4 text-sage-drift shrink-0" />
+                      Clean, readable code on GitHub
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CircleCheck className="h-4 w-4 text-sage-drift shrink-0" />
+                      A LinkedIn post sharing what you learned
+                    </li>
+                  </ul>
+                </div>
               </div>
-            </div>
-          </BentoCard>
-        </BentoSection>
+            </BentoCard>
+          </BentoSection>
+        </motion.div>
 
         {/* 3. Build Guidance */}
-        <BentoSection title="Build Guidance" description="Student-friendly steps to complete the task" variant="full" className="mb-6">
-          <BentoCard variant="default" padding="lg">
-            <div className="space-y-4">
-              {[
-                { step: 1, title: "Set up your repo", desc: "Create a new GitHub repository. Initialize with a README and .gitignore." },
-                { step: 2, title: "Build the project", desc: "Follow the task description. Keep it simple, make it work, commit often." },
-                { step: 3, title: "Deploy & test", desc: "Deploy to Vercel/Netlify. Test on mobile (390px) and desktop." },
-                { step: 4, title: "Write your LinkedIn post", desc: "Share what you built, what you learned, and link your repo." },
-                { step: 5, title: "Submit proof", desc: "Fill in the fields below and submit. Your artifact joins your portfolio." },
-              ].map((item) => (
-                <div key={item.step} className="flex gap-3">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-sage-drift text-white font-bold text-sm shrink-0">
-                    {item.step}
-                  </div>
-                  <div>
-                    <h4 className="font-medium text-foreground">{item.title}</h4>
-                    <p className="text-sm text-muted-foreground">{item.desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </BentoCard>
-        </BentoSection>
+        <motion.div
+          initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, ease: "easeOut", delay: 0.2 }}
+        >
+          <BentoSection title="Build Guidance" description="Student-friendly steps to complete the task" variant="full" className="mb-6">
+            <BentoCard variant="default" padding="lg">
+              <div className="space-y-4">
+                {[
+                  { step: 1, title: "Set up your repo", desc: "Create a new GitHub repository. Initialize with a README and .gitignore." },
+                  { step: 2, title: "Build the project", desc: "Follow the task description. Keep it simple, make it work, commit often." },
+                  { step: 3, title: "Deploy & test", desc: "Deploy to Vercel/Netlify. Test on mobile (390px) and desktop." },
+                  { step: 4, title: "Write your LinkedIn post", desc: "Share what you built, what you learned, and link your repo." },
+                  { step: 5, title: "Submit proof", desc: "Fill in the fields below and submit. Your artifact joins your portfolio." },
+                ].map((item) => (
+                  <motion.div
+                    key={item.step}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.2, ease: "easeOut", delay: 0.3 + item.step * 0.05 }}
+                    className="flex gap-3"
+                  >
+                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-sage-drift text-white font-bold text-sm shrink-0">
+                      {item.step}
+                    </div>
+                    <div>
+                      <h4 className="font-medium text-foreground">{item.title}</h4>
+                      <p className="text-sm text-muted-foreground">{item.desc}</p>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </BentoCard>
+          </BentoSection>
+        </motion.div>
 
         {/* 4. Proof Submission */}
         <BentoSection title="Submit Your Proof" description="Share your work — it becomes part of your portfolio" variant="full" className="mb-6">
-          <ProofSubmissionForm day={day} isCompleted={isCompleted} />
+          <ProofSubmissionForm day={day} isCompleted={isCompleted} shouldReduceMotion={shouldReduceMotion} />
         </BentoSection>
 
         {/* 5. Completion State (shown when submitted) */}
         {isCompleted && (
-          <BentoSection title="Challenge Complete" description="Your artifact is now part of your portfolio" variant="full" className="mb-6">
-            <CompletionState day={day} />
-          </BentoSection>
+          <motion.div
+            initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, ease: "easeOut", delay: 0.4 }}
+          >
+            <BentoSection title="Challenge Complete" description="Your artifact is now part of your portfolio" variant="full" className="mb-6">
+              <CompletionState day={day} shouldReduceMotion={shouldReduceMotion} />
+            </BentoSection>
+          </motion.div>
         )}
 
         {/* Quick actions */}
@@ -221,12 +263,12 @@ function ChallengeDayClient({ day, dayNum }: ChallengeDayClientProps) {
           )}
         </div>
       </div>
-    </main>
+    </motion.main>
   );
 }
 
 /* --- Proof Submission Form Component --- */
-function ProofSubmissionForm({ day, isCompleted }: { day: DayData; isCompleted: boolean }) {
+function ProofSubmissionForm({ day, isCompleted, shouldReduceMotion }: { day: DayData; isCompleted: boolean; shouldReduceMotion: boolean | null }) {
   const [formData, setFormData] = useState({
     githubRepo: "",
     githubCommit: "",
@@ -278,9 +320,19 @@ function ProofSubmissionForm({ day, isCompleted }: { day: DayData; isCompleted: 
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5">
+    <motion.form
+      onSubmit={handleSubmit}
+      className="space-y-5"
+      initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3, ease: "easeOut", delay: 0.3 }}
+    >
       {day.proof.githubRepo && (
-        <div>
+        <motion.div
+          initial={{ opacity: 0, x: shouldReduceMotion ? 0 : -10 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.2, ease: "easeOut", delay: 0.4 }}
+        >
           <label htmlFor="githubRepo" className="block mb-1 text-sm font-medium text-foreground">
             GitHub Repository URL
           </label>
@@ -297,11 +349,15 @@ function ProofSubmissionForm({ day, isCompleted }: { day: DayData; isCompleted: 
             disabled={isSubmitting}
           />
           {errors.githubRepo && <p className="mt-1 text-sm text-red-600">{errors.githubRepo}</p>}
-        </div>
+        </motion.div>
       )}
 
       {day.proof.githubCommit && (
-        <div>
+        <motion.div
+          initial={{ opacity: 0, x: shouldReduceMotion ? 0 : -10 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.2, ease: "easeOut", delay: 0.45 }}
+        >
           <label htmlFor="githubCommit" className="block mb-1 text-sm font-medium text-foreground">
             GitHub Commit URL
           </label>
@@ -318,11 +374,15 @@ function ProofSubmissionForm({ day, isCompleted }: { day: DayData; isCompleted: 
             disabled={isSubmitting}
           />
           {errors.githubCommit && <p className="mt-1 text-sm text-red-600">{errors.githubCommit}</p>}
-        </div>
+        </motion.div>
       )}
 
       {day.proof.linkedinPost && (
-        <div>
+        <motion.div
+          initial={{ opacity: 0, x: shouldReduceMotion ? 0 : -10 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.2, ease: "easeOut", delay: 0.5 }}
+        >
           <label htmlFor="linkedinPost" className="block mb-1 text-sm font-medium text-foreground">
             LinkedIn Post URL
           </label>
@@ -339,7 +399,7 @@ function ProofSubmissionForm({ day, isCompleted }: { day: DayData; isCompleted: 
             disabled={isSubmitting}
           />
           {errors.linkedinPost && <p className="mt-1 text-sm text-red-600">{errors.linkedinPost}</p>}
-        </div>
+        </motion.div>
       )}
 
       <Button type="submit" className="w-full" size="lg" isLoading={isSubmitting}>
@@ -350,17 +410,27 @@ function ProofSubmissionForm({ day, isCompleted }: { day: DayData; isCompleted: 
       <p className="text-center text-sm text-muted-foreground">
         Your submission becomes a portfolio artifact. No fake stats — just your work, visible.
       </p>
-    </form>
+    </motion.form>
   );
 }
 
 /* --- Completion State Component --- */
-function CompletionState({ day }: { day: DayData }) {
+function CompletionState({ day, shouldReduceMotion }: { day: DayData; shouldReduceMotion: boolean | null }) {
   const journey = getJourneyData();
 
   return (
-    <div className="space-y-6">
-      <div className="text-center py-8">
+    <motion.div
+      className="space-y-6"
+      initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3, ease: "easeOut" }}
+    >
+      <motion.div
+        className="text-center py-8"
+        initial={{ opacity: 0, scale: shouldReduceMotion ? 1 : 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.3, ease: "easeOut", delay: 0.1 }}
+      >
         <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-sage-drift/10">
           <CircleCheck className="h-8 w-8 text-sage-drift" />
         </div>
@@ -368,7 +438,7 @@ function CompletionState({ day }: { day: DayData }) {
         <p className="text-muted-foreground">
           Your proof has been recorded. This artifact is now part of your public portfolio.
         </p>
-      </div>
+      </motion.div>
 
       <BentoCard variant="default" padding="lg">
         <h3 className="mb-4 text-lg font-semibold text-foreground flex items-center gap-2">
@@ -377,39 +447,59 @@ function CompletionState({ day }: { day: DayData }) {
         </h3>
         <div className="space-y-3 text-sm">
           {day.proof.githubRepo && (
-            <div className="flex items-center gap-3 p-3 bg-warm-parchment rounded-lg">
+            <motion.div
+              initial={{ opacity: 0, x: shouldReduceMotion ? 0 : -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.2, ease: "easeOut", delay: 0.2 }}
+              className="flex items-center gap-3 p-3 bg-warm-parchment rounded-lg"
+            >
               <GitBranch className="h-5 w-5 text-sage-drift shrink-0" />
               <div>
                 <p className="font-medium text-foreground">GitHub Repository</p>
                 <p className="text-muted-foreground truncate">Submitted</p>
               </div>
               <ExternalLink className="h-4 w-4 text-muted-foreground ml-auto" />
-            </div>
+            </motion.div>
           )}
           {day.proof.githubCommit && (
-            <div className="flex items-center gap-3 p-3 bg-warm-parchment rounded-lg">
+            <motion.div
+              initial={{ opacity: 0, x: shouldReduceMotion ? 0 : -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.2, ease: "easeOut", delay: 0.25 }}
+              className="flex items-center gap-3 p-3 bg-warm-parchment rounded-lg"
+            >
               <Code2 className="h-5 w-5 text-sage-drift shrink-0" />
               <div>
                 <p className="font-medium text-foreground">GitHub Commit</p>
                 <p className="text-muted-foreground truncate">Submitted</p>
               </div>
               <ExternalLink className="h-4 w-4 text-muted-foreground ml-auto" />
-            </div>
+            </motion.div>
           )}
           {day.proof.linkedinPost && (
-            <div className="flex items-center gap-3 p-3 bg-warm-parchment rounded-lg">
+            <motion.div
+              initial={{ opacity: 0, x: shouldReduceMotion ? 0 : -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.2, ease: "easeOut", delay: 0.3 }}
+              className="flex items-center gap-3 p-3 bg-warm-parchment rounded-lg"
+            >
               <Link2 className="h-5 w-5 text-sage-drift shrink-0" />
               <div>
                 <p className="font-medium text-foreground">LinkedIn Post</p>
                 <p className="text-muted-foreground truncate">Submitted</p>
               </div>
               <ExternalLink className="h-4 w-4 text-muted-foreground ml-auto" />
-            </div>
+            </motion.div>
           )}
         </div>
       </BentoCard>
 
-      <div className="space-y-3">
+      <motion.div
+        className="space-y-3"
+        initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3, ease: "easeOut", delay: 0.35 }}
+      >
         <p className="text-center text-lg font-semibold text-foreground">
           Day {day.day} complete — {60 - day.day} challenges to go
         </p>
@@ -424,9 +514,14 @@ function CompletionState({ day }: { day: DayData }) {
         <p className="text-center text-sm text-muted-foreground">
           Portfolio artifacts: {journey.artifactsCreated} of 60
         </p>
-      </div>
+      </motion.div>
 
-      <div className="pt-4 border-t border-soft-border space-y-3">
+      <motion.div
+        className="pt-4 border-t border-soft-border space-y-3"
+        initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3, ease: "easeOut", delay: 0.4 }}
+      >
         <p className="text-center text-sm text-muted-foreground">
           What&apos;s next?
         </p>
@@ -446,8 +541,8 @@ function CompletionState({ day }: { day: DayData }) {
             </Link>
           )}
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }
 

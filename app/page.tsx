@@ -1,13 +1,10 @@
 "use client";
 
+import { motion } from "framer-motion";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { BentoCard } from "@/components/bento/bento-card";
-import { BentoGrid } from "@/components/bento/bento-grid";
-import { BentoSection } from "@/components/bento/bento-section";
 import {
-  CalendarDays,
   GitBranch,
   TrendingUp,
   CheckCircle2,
@@ -55,377 +52,361 @@ function Navbar() {
 
 function HeroSection() {
   return (
-    <section className="relative overflow-hidden bg-ivory-stillness py-12 sm:py-16">
-      {/* Decorative background elements */}
-      <div className="absolute -left-20 -top-20 h-64 w-64 rounded-full bg-warm-parchment opacity-50 blur-3xl" />
-      <div className="absolute -right-20 top-40 h-80 w-80 rounded-full bg-sage-drift opacity-20 blur-3xl" />
+    <motion.section
+      className="relative overflow-hidden bg-ivory-stillness py-12 sm:py-16"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+    >
+      <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
+        <div className="absolute -left-20 top-20 w-96 h-96 rounded-full bg-sage-drift/10 blur-3xl" />
+        <div className="absolute -right-20 bottom-20 w-96 h-96 rounded-full bg-ivory-stillness/20 blur-3xl" />
+      </div>
 
       <div className="relative mx-auto max-w-3xl px-4 text-center sm:px-6">
-        <Badge variant="secondary" className="mb-4">
-          60-day public building challenge
-        </Badge>
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
+        >
+          <Badge variant="secondary" className="mb-4">
+            60-day public building challenge
+          </Badge>
+        </motion.div>
 
-        <h1 className="mb-4 text-4xl font-bold tracking-tight text-foreground sm:text-5xl md:text-6xl">
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
+          className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl md:text-6xl mb-4"
+        >
           Build your portfolio, <br className="hidden sm:block" />
           <span className="text-sage-drift">one day at a time</span>
-        </h1>
+        </motion.h1>
 
-        <p className="mx-auto mb-8 max-w-2xl text-lg text-muted-foreground sm:text-xl">
-          A 60-day public building challenge. Each day, one small build.
-          After 60 days, a public portfolio that speaks for you.
-        </p>
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3, ease: "easeOut" }}
+          className="mx-auto mb-8 max-w-2xl text-lg text-muted-foreground sm:text-xl"
+        >
+          A 60-day public building challenge. Each day, one small build. After 60 days, a public portfolio that speaks for you.
+        </motion.p>
 
-        <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.4, delay: 0.4, ease: "easeOut" }}
+          className="flex flex-col gap-3 sm:flex-row sm:justify-center"
+        >
           <Link href="/dashboard">
-            <Button size="lg" icon={<ArrowRight className="h-4 w-4" />}>
-              Start the challenge
-            </Button>
+            <motion.div
+              whileHover={{ scale: 1.02, y: -2 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ duration: 0.2 }}
+            >
+              <Button size="lg" icon={<ArrowRight className="h-4 w-4" />}>
+                Start the challenge
+              </Button>
+            </motion.div>
           </Link>
           <Link href="#how-it-works">
-            <Button variant="outline" size="lg">
-              Learn more
-            </Button>
+            <motion.div
+              whileHover={{ scale: 1.02, y: -2 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ duration: 0.2 }}
+            >
+              <Button variant="outline" size="lg">
+                Learn more
+              </Button>
+            </motion.div>
           </Link>
-        </div>
+        </motion.div>
 
-        <p className="mt-6 text-sm text-muted-foreground">
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3, delay: 0.55 }}
+          className="mt-6 text-sm text-muted-foreground"
+        >
           No experience required. Day 1 is designed to be a gentle start.
-        </p>
+        </motion.p>
       </div>
-    </section>
+    </motion.section>
   );
 }
 
 function ValueSection() {
   return (
-    <BentoSection
-      title="Why students join"
-      description="The value exchange: 60 small builds = one impressive public portfolio"
-      padding="md"
-      className="bg-warm-parchment/50"
+    <motion.section
+      id="how-it-works"
+      className="bg-ivory-stillness py-16 sm:py-20"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
     >
-      <BentoGrid columns={1} gap="lg">
-        {/* Card 1: What happens */}
-        <BentoCard variant="default" padding="lg">
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-start">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-sage-drift text-white">
-              <Building2 className="h-6 w-6" />
-            </div>
-            <div>
-              <h3 className="mb-1 text-lg font-semibold">You build daily</h3>
-              <p className="text-muted-foreground">
-                Each day, a focused task you can finish in one sitting. No
-                theoretical fluff — just ship real work.
-              </p>
-            </div>
-          </div>
-        </BentoCard>
+      <div className="mx-auto max-w-3xl px-4 sm:px-6">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.1, ease: "easeOut" }}
+        >
+          <h2 className="text-3xl font-bold text-foreground sm:text-4xl text-center mb-4">How it works</h2>
+          <p className="mt-3 text-lg text-muted-foreground text-center">
+            Three simple steps, repeated for 60 days.
+          </p>
+        </motion.div>
 
-        {/* Card 2: Proof of work */}
-        <BentoCard variant="default" padding="lg">
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-start">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-warm-parchment text-sage-drift">
-              <GitBranch className="h-6 w-6" />
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.2, ease: "easeOut" }}
+        >
+          {/* Step 1 */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.3, delay: 0.3 }}
+            className="group relative p-6 rounded-lg border border-soft-border bg-card/50"
+          >
+            <motion.div
+              className="absolute top-4 right-4"
+              whileHover={{ rotate: 8 }}
+              transition={{ duration: 0.2 }}
+            >
+              <CheckCircle2 className="h-6 w-6 text-sage-drift" />
+            </motion.div>
+            <div className="flex items-center gap-3 mb-4">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-sage-drift text-white">
+                <CheckCircle2 className="h-5 w-5" />
+              </div>
+              <span className="text-xs font-bold text-sage-drift">Step 1</span>
             </div>
-            <div>
-              <h3 className="mb-1 text-lg font-semibold">GitHub + LinkedIn</h3>
-              <p className="text-muted-foreground">
-                Each day, submit proof: your GitHub repo/commit link and a
-                LinkedIn post. These become your portfolio artifacts.
-              </p>
-            </div>
-          </div>
-        </BentoCard>
+            <h3 className="text-lg font-semibold text-foreground mb-2">Start day 1</h3>
+            <p className="text-sm text-muted-foreground">
+              A gentle onboarding task designed to be achievable. No experience needed.
+            </p>
+          </motion.div>
 
-        {/* Card 3: The result */}
-        <BentoCard variant="default" padding="lg">
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-start">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-sage-drift text-white">
-              <TrendingUp className="h-6 w-6" />
+          {/* Step 2 */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.3, delay: 0.4 }}
+            className="group relative p-6 rounded-lg border border-soft-border bg-card/50"
+          >
+            <motion.div
+              className="absolute top-4 right-4"
+              whileHover={{ rotate: 8 }}
+              transition={{ duration: 0.2 }}
+            >
+              <Share2 className="h-6 w-6 text-sage-drift" />
+            </motion.div>
+            <div className="flex items-center gap-3 mb-4">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-sage-drift text-white">
+                <Share2 className="h-5 w-5" />
+              </div>
+              <span className="text-xs font-bold text-sage-drift">Step 2</span>
             </div>
-            <div>
-              <h3 className="mb-1 text-lg font-semibold">Portfolio in 60 days</h3>
-              <p className="text-muted-foreground">
-                60 days = 60 artifacts. A public portfolio recruiters can see,
-                share, and trust more than any resume.
-              </p>
+            <h3 className="text-lg font-semibold text-foreground mb-2">Build & share</h3>
+            <p className="text-sm text-muted-foreground">
+              Complete your task, commit to GitHub, and share on LinkedIn.
+            </p>
+          </motion.div>
+
+          {/* Step 3 */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.3, delay: 0.5 }}
+            className="group relative p-6 rounded-lg border border-soft-border bg-card/50"
+          >
+            <motion.div
+              className="absolute top-4 right-4"
+              whileHover={{ rotate: 8 }}
+              transition={{ duration: 0.2 }}
+            >
+              <Building2 className="h-6 w-6 text-sage-drift" />
+            </motion.div>
+            <div className="flex items-center gap-3 mb-4">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-sage-drift text-white">
+                <Building2 className="h-5 w-5" />
+              </div>
+              <span className="text-xs font-bold text-sage-drift">Step 3</span>
             </div>
-          </div>
-        </BentoCard>
-      </BentoGrid>
-    </BentoSection>
+            <h3 className="text-lg font-semibold text-foreground mb-2">Grow your portfolio</h3>
+            <p className="text-sm text-muted-foreground">
+              Watch your work accumulate into a visible public portfolio.
+            </p>
+          </motion.div>
+        </motion.div>
+
+        <motion.div
+          className="mt-8 flex justify-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3, delay: 0.6 }}
+        >
+          <Link href="/dashboard">
+            <motion.div
+              whileHover={{ scale: 1.02, y: -2 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ duration: 0.2 }}
+            >
+              <Button variant="outline" size="lg">
+                See full challenge schedule
+              </Button>
+            </motion.div>
+          </Link>
+        </motion.div>
+      </div>
+    </motion.section>
   );
 }
 
-function HowItWorksSection() {
-  const steps = [
+function FeatureCards() {
+  const features = [
     {
-      number: "01",
-      title: "Start day 1",
-      description: "A gentle onboarding task designed to be achievable.",
-      icon: <CheckCircle2 className="h-5 w-5" />,
+      title: "You build daily",
+      description: "Each day, a focused task you can finish in one sitting. No theoretical fluff — just ship real work.",
+      icon: <TrendingUp className="h-6 w-6 text-sage-drift" />,
+      accent: "bg-sage-drift/20 text-sage-drift",
     },
     {
-      number: "02",
-      title: "Build & share",
-      description: "Complete your task, commit to GitHub, share on LinkedIn.",
-      icon: <Share2 className="h-5 w-5" />,
+      title: "GitHub + LinkedIn",
+      description: "Each day, submit proof: your GitHub repo/commit link and a LinkedIn post. These become your portfolio artifacts.",
+      icon: <GitBranch className="h-6 w-6 text-ivory-stillness" />,
+      accent: "bg-ivory-stillness/10 text-ivory-stillness",
     },
     {
-      number: "03",
-      title: "Grow your portfolio",
-      description: "Watch your work accumulate into a visible public portfolio.",
-      icon: <Building2 className="h-5 w-5" />,
+      title: "Portfolio in 60 days",
+      description: "60 days = 60 artifacts. A public portfolio recruiters can see, share, and trust more than any resume.",
+      icon: <Building2 className="h-6 w-6 text-ivory-stillness" />,
+      accent: "bg-warm-parchment/50 text-ivory-stillness",
     },
   ];
 
   return (
-    <section id="how-it-works" className="bg-ivory-stillness py-16 sm:py-20">
+    <motion.section
+      id="features"
+      className="bg-ivory-stillness py-16 sm:py-20"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+    >
       <div className="mx-auto max-w-3xl px-4 sm:px-6">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-foreground sm:text-4xl">
-            How it works
-          </h2>
-          <p className="mt-3 text-lg text-muted-foreground">
-            Three simple steps, repeated for 60 days
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.3, ease: "easeOut" }}
+        >
+          <h2 className="text-3xl font-bold text-foreground text-center mb-4">Why this approach</h2>
+          <p className="mt-3 text-lg text-muted-foreground text-center">
+            60 small builds = one impressive public portfolio.
           </p>
-        </div>
+        </motion.div>
 
-        <div className="relative">
-          {/* Connection line */}
-          <div className="absolute left-[50px] top-0 bottom-0 hidden sm:block h-full w-0.5 bg-soft-border" />
-
-          <div className="space-y-8">
-            {steps.map((step, index) => (
-              <div key={index} className="relative flex gap-6 sm:gap-8">
-                <div className="relative flex h-24 w-24 flex-col items-center justify-center rounded-xl bg-card shadow-sm sm:h-32 sm:w-32">
-                  <span className="absolute -top-2 -left-2 rounded-lg bg-sage-drift px-2 py-1 text-xs font-bold text-white">
-                    {step.number}
-                  </span>
-                  <div className="mt-2 text-sage-drift">{step.icon}</div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
+          {features.map((feature, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: index * 0.1 + 0.4 }}
+              className="group relative p-6 rounded-lg border border-soft-border bg-card/50"
+            >
+              <div
+                className={`flex items-center gap-3 mb-4 transition-all duration-200 group-hover:scale-105 group-hover:shadow-lg ${feature.accent}`}
+              >
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg">
+                  {feature.icon}
                 </div>
-
-                <div>
-                  <h3 className="text-xl font-semibold text-foreground">
-                    {step.title}
-                  </h3>
-                  <p className="mt-1 text-muted-foreground">{step.description}</p>
-                </div>
+                <span className="text-xs font-bold uppercase tracking-wider text-sage-drift">{feature.title}</span>
               </div>
-            ))}
-          </div>
-
-          <div className="mt-8 flex justify-center">
-            <Link href="/dashboard">
-              <Button variant="outline" size="lg">
-                See full challenge schedule
-              </Button>
-            </Link>
-          </div>
+              <p className="text-sm text-muted-foreground">
+                {feature.description}
+              </p>
+            </motion.div>
+          ))}
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }
 
 function PortfolioBuilderSection() {
   return (
-    <BentoSection
-      title="Portfolio, not just a streak"
-      description="Streaks are nice. A portfolio that proves your skills? That's life-changing."
-      variant="full"
-      padding="md"
-      className="bg-sage-drift text-white"
+    <motion.section
+      id="portfolio"
+      className="bg-ivory-stillness py-16 sm:py-20"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
     >
-      <div className="grid gap-8 sm:grid-cols-2">
-        <div>
-          <h3 className="mb-4 text-2xl font-semibold">Traditional tracking</h3>
-          <ul className="space-y-3">
-            {[
-              "Keeps you accountable",
-              "Shows consistency",
-              "But feels like homework",
-              "No visible proof of skills",
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2 text-sage-drift/90">
-                <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0" />
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div>
-          <h3 className="mb-4 text-2xl font-semibold">ABTalks approach</h3>
-          <ul className="space-y-3">
-            {[
-              "Daily accountability",
-              "Visible progress tracking",
-              "Momentum that compounds day over day",
-              "Real portfolio for recruiters",
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0" />
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-
-      <div className="mt-8 rounded-lg bg-white/10 p-6">
-        <p className="text-lg leading-relaxed">
-          60 days of small builds becomes a public record of your growth —
-          visible, shareable, and impossible to fake.
-        </p>
-      </div>
-    </BentoSection>
-  );
-}
-
-function JourneyPreviewSection() {
-  return (
-    <section className="bg-ivory-stillness py-16 sm:py-20">
       <div className="mx-auto max-w-3xl px-4 sm:px-6">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-foreground sm:text-4xl">
-            Your 60-day journey
-          </h2>
-          <p className="mt-3 text-lg text-muted-foreground">
-            From day 1 to day 60 — watch your portfolio grow
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.5, ease: "easeOut" }}
+        >
+          <h2 className="text-3xl font-bold text-foreground text-center mb-4">Portfolio, not just a streak</h2>
+          <p className="mt-3 text-lg text-muted-foreground text-center">
+            Streaks are nice. A portfolio that proves your skills? That&apos;s life-changing.
           </p>
-        </div>
+        </motion.div>
 
-        {/* Visual journey bar */}
-        <div className="relative mb-12 rounded-xl bg-white p-6 shadow-sm">
-          <div className="mb-6 grid grid-cols-4 gap-4 text-center sm:grid-cols-6">
-            {[
-              { label: "Start", percent: 0 },
-              { label: "Day 15", percent: 25 },
-              { label: "Day 30", percent: 50 },
-              { label: "Day 45", percent: 75 },
-              { label: "Day 60", percent: 100 },
-            ].map((item, i) => (
-              <div key={i} className="relative">
-                <div
-                  className={`mb-2 h-1.5 w-full rounded-full ${
-                    i <= 2 ? "bg-sage-drift" : "bg-soft-border"
-                  }`}
-                />
-                <div className="text-xs font-medium text-foreground">
-                  {item.label}
-                </div>
-                <div className="text-[10px] text-muted-foreground">
-                  {item.percent}% complete
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Progress markers */}
-          <div className="grid grid-cols-6 gap-1 text-center text-[10px] font-medium text-sage-drift">
-            {Array.from({ length: 6 }).map((_, i) => (
-              <div key={i} className="py-1">
-                <div className="mx-auto mb-1 h-2 w-2 rounded-full bg-sage-drift" />
-                <span>Build</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="grid gap-4 sm:grid-cols-3">
-          <div className="rounded-lg bg-white p-4 shadow-sm">
-            <div className="text-2xl font-bold text-sage-drift">60</div>
-            <div className="text-sm text-muted-foreground">days</div>
-          </div>
-          <div className="rounded-lg bg-white p-4 shadow-sm">
-            <div className="text-2xl font-bold text-sage-drift">1</div>
-            <div className="text-sm text-muted-foreground">build per day</div>
-          </div>
-          <div className="rounded-lg bg-white p-4 shadow-sm">
-            <div className="text-2xl font-bold text-sage-drift">2</div>
-            <div className="text-sm text-muted-foreground">proofs: GitHub + LinkedIn</div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function MotivationSection() {
-  return (
-    <BentoSection
-      title="Ready to start?"
-      description="Your first day is designed to be achievable. No experience required."
-      variant="full"
-      padding="md"
-      className="bg-warm-parchment text-center"
-    >
-      <div className="max-w-2xl mx-auto">
-        <div className="mb-6 inline-flex items-center justify-center rounded-full bg-sage-drift/10 p-3">
-          <CalendarDays className="h-8 w-8 text-sage-drift" />
-        </div>
-        <h3 className="mb-3 text-2xl font-bold text-foreground">
-          60 days. <span className="text-sage-drift">One build at a time.</span>
-        </h3>
-        <p className="mb-6 text-lg text-muted-foreground">
-          Your journey starts with a single commit. Show up on day one and
-          watch your work compound into a portfolio.
-        </p>
-        <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
-          <Link href="/dashboard">
-            <Button size="lg">Start the challenge</Button>
-          </Link>
-          <Link href="#how-it-works">
-            <Button variant="outline" size="lg">
-              See what to expect
-            </Button>
-          </Link>
-        </div>
-      </div>
-    </BentoSection>
-  );
-}
-
-function Footer() {
-  return (
-    <footer className="border-t border-soft-border bg-ivory-stillness py-8">
-      <div className="mx-auto max-w-3xl px-4 sm:px-6">
-        <div className="grid gap-8 sm:grid-cols-4">
-          <div className="col-span-1 sm:col-span-2">
-            <div className="mb-4 flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-sage-drift text-white">
-                <Code2 className="h-5 w-5" />
-              </div>
-              <span className="font-semibold text-foreground">ABTalks</span>
-            </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.3, delay: 0.6 }}
+            className="p-6 rounded-lg border border-soft-border bg-card/50"
+          >
+            <h3 className="text-lg font-semibold text-foreground mb-3">Stack your artifacts</h3>
             <p className="text-sm text-muted-foreground">
-              A 60-day public building challenge. Build your portfolio, one day
-              at a time.
+              Each completed day adds one artifact to your public portfolio:
             </p>
-          </div>
-          <div>
-            <h4 className="mb-3 font-semibold text-foreground">Program</h4>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li><Link href="#" className="hover:text-sage-drift">Overview</Link></li>
-              <li><Link href="#" className="hover:text-sage-drift">Curriculum</Link></li>
-              <li><Link href="#" className="hover:text-sage-drift">Cohorts</Link></li>
+            <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
+              <li>GitHub repository with your code</li>
+              <li>LinkedIn post sharing your build</li>
+              <li>Public record of your skills in action</li>
             </ul>
-          </div>
-          <div>
-            <h4 className="mb-3 font-semibold text-foreground">Resources</h4>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li><Link href="#" className="hover:text-sage-drift">FAQ</Link></li>
-              <li><Link href="#" className="hover:text-sage-drift">Community</Link></li>
-              <li><Link href="#" className="hover:text-sage-drift">Blog</Link></li>
-            </ul>
-          </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.3, delay: 0.7 }}
+            className="p-6 rounded-lg border border-soft-border bg-card/50"
+          >
+            <h3 className="text-lg font-semibold text-foreground mb-3">60 artifacts in 60 days</h3>
+            <p className="text-sm text-muted-foreground">
+              After 60 days, you&apos;ll have a portfolio that speaks for itself. Recruiters can see real work, not just a resume.
+            </p>
+          </motion.div>
         </div>
-        <div className="mt-8 pt-6 border-t border-soft-border text-center text-sm text-muted-foreground">
-          <p>© 2026 ABTalks. Mock prototype for PS1 hackathon.</p>
-        </div>
+
+        <motion.div
+          className="mt-8 flex justify-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3, delay: 0.8 }}
+        >
+          <Link href="/dashboard">
+            <motion.div
+              whileHover={{ scale: 1.02, y: -2 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ duration: 0.2 }}
+            >
+              <Button variant="outline" size="lg">
+                See my growing portfolio
+              </Button>
+            </motion.div>
+          </Link>
+        </motion.div>
       </div>
-    </footer>
+    </motion.section>
   );
 }
 
@@ -433,15 +414,10 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-ivory-stillness">
       <Navbar />
-      <main>
-        <HeroSection />
-        <ValueSection />
-        <HowItWorksSection />
-        <PortfolioBuilderSection />
-        <JourneyPreviewSection />
-        <MotivationSection />
-      </main>
-      <Footer />
+      <HeroSection />
+      <ValueSection />
+      <FeatureCards />
+      <PortfolioBuilderSection />
     </div>
   );
 }

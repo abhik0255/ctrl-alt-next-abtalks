@@ -17,7 +17,7 @@ import {
   Trophy,
   ChevronRight,
 } from "lucide-react";
-import { JourneyDay, Milestone, getJourneyData, getCurrentDayChallenge } from "@/data/journey";
+import { JourneyDay, getJourneyData, getCurrentDayChallenge } from "@/data/journey";
 
 // Icon mapping
 const iconMap: Record<string, React.ElementType> = {
@@ -29,37 +29,9 @@ const iconMap: Record<string, React.ElementType> = {
   trophy: Trophy,
 };
 
-interface PortfolioTimelineProps {
-  demoState?: "ontrack" | "missed";
-}
-
-function MilestoneBadge({ milestone, isCurrent }: { milestone: Milestone; isCurrent: boolean }) {
-  const Icon = iconMap[milestone.icon] || Flag;
-  const achieved = milestone.achieved;
-
-  return (
-    <div className={`flex flex-col items-center gap-2 relative ${isCurrent ? "z-10" : ""}`}>
-      <div
-        className={`flex h-10 w-10 items-center justify-center rounded-full border-2 transition-all ${
-          achieved
-            ? "bg-sage-drift border-sage-drift text-white"
-            : isCurrent
-            ? "bg-ivory-stillness border-sage-drift text-sage-drift"
-            : "bg-ivory-stillness border-soft-border text-muted-gray"
-        }`}
-      >
-        <Icon className="h-5 w-5" />
-      </div>
-      <div className="text-center w-20">
-        <p className={`text-xs font-medium ${achieved || isCurrent ? "text-foreground" : "text-muted-foreground"}`}>
-          Day {milestone.day}
-        </p>
-        <p className={`text-[10px] ${achieved ? "text-sage-drift" : "text-muted-foreground"}`}>
-          {milestone.label}
-        </p>
-      </div>
-    </div>
-  );
+function IconFromLib({ icon, className }: { icon: string; className?: string }) {
+  const Icon = iconMap[icon] || Flag;
+  return <Icon className={className} />;
 }
 
 function ArtifactCard({ day, isCompact = false }: { day: JourneyDay; isCompact?: boolean }) {
@@ -108,6 +80,10 @@ function ArtifactCard({ day, isCompact = false }: { day: JourneyDay; isCompact?:
   );
 }
 
+interface PortfolioTimelineProps {
+  demoState?: "ontrack" | "missed";
+}
+
 export function PortfolioTimeline({ demoState = "ontrack" }: PortfolioTimelineProps) {
   const journey = getJourneyData(demoState);
   const currentDay = getCurrentDayChallenge();
@@ -152,17 +128,36 @@ export function PortfolioTimeline({ demoState = "ontrack" }: PortfolioTimelinePr
 
           {/* Milestone timeline */}
           <div className="relative">
-            <div className="absolute left-5 right-5 top-5 h-0.5 bg-soft-border" />
-            <div className="relative flex items-center justify-between px-5">
+            <div className="absolute left-0 right-0 top-4 h-px bg-soft-border" />
+            <div className="relative flex flex-wrap items-center justify-center gap-1.5 py-2 px-3">
               {journey.milestones.map((milestone, idx) => (
-                <MilestoneBadge
+                <div
                   key={milestone.day}
-                  milestone={milestone}
-                  isCurrent={
-                    !milestone.achieved &&
-                    (idx === 0 || journey.milestones[idx - 1].achieved)
-                  }
-                />
+                  className={`flex flex-col items-center gap-1 transition-all duration-300 ${
+                    !milestone.achieved && (idx === 0 || journey.milestones[idx - 1].achieved)
+                      ? "ring-2 ring-sage-drift bg-sage-drift/5"
+                      : ""
+                  }`}
+                >
+                  <div
+                    className={`flex h-8 w-8 items-center justify-center rounded-full border-2 transition-all ${
+                      milestone.achieved
+                        ? "bg-sage-drift border-sage-drift text-white"
+                        : "bg-ivory-stillness border-sage-drift text-sage-drift"
+                    }`}
+                  >
+                    <IconFromLib
+                      icon={milestone.icon}
+                      className="h-4 w-4"
+                    />
+                  </div>
+                  <p className="text-[10px] font-medium text-foreground text-center">
+                    Day {milestone.day}
+                  </p>
+                  <p className="text-[9px] text-muted-foreground text-center">
+                    {milestone.label}
+                  </p>
+                </div>
               ))}
             </div>
           </div>
