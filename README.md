@@ -29,8 +29,12 @@ We are redesigning ABTalks so that a student unfamiliar with the program can qui
 
 ## Team
 - **Team Name**: CTRL ALT NEXT
+- **Abhi Kashyap** — Lead Developer & Project Coordinator: project direction, technical architecture, application development and integration, AI-assisted workflow management, implementation review
+- **Anuj Kumar** — Technical Reviewer & AI Workflow Support: prompt preparation (ChatGPT/Claude Code workflows), review of implementation reports, feedback on technical decisions and feature direction, validation of AI-generated output
 - **AI Assistant**: Claude Code (Anthropic)
 - **Persistent Memory**: Breeth MCP
+
+> See `CONTRIBUTORS.md` for full contribution details and `Docs/ai-workflow.md` for how AI tools and human review operated.
 
 ## Documentation
 | File | Purpose |

@@ -56,6 +56,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Next-step guidance (dashboard / tomorrow preview)
   - Mobile-first 390px design, portfolio-over-homework framing
   - Uses existing Bento components, UI primitives, design tokens, Lucide icons
+- **Team contribution & AI workflow documentation** (Session: 2026-08-08-1550):
+  - `CONTRIBUTORS.md` — team CTRL ALT NEXT, contributor roles and responsibilities (Abhi Kashyap — lead developer; Anuj Kumar — review/validation support)
+  - `Docs/ai-workflow.md` — AI tool usage (Claude Code, ChatGPT) and the human review workflow
 
 ### Changed
 - `CLAUDE.md` rewritten to distinguish confirmed requirements, project decisions, proposed defaults, and unresolved questions (Session: 2026-08-08-02)
@@ -78,6 +81,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `PROMPTS.md` — logged stack and product decision session
 - `app/globals.css` — complete design system overhaul (Session: 2026-08-08-08): custom color palette, Bento components, typography
 - `app/layout.tsx` — Inter font injection via Next.js metadata API
+- `README.md` — Team section lists contributors (Abhi Kashyap, Anuj Kumar) and links to CONTRIBUTORS.md / ai-workflow.md (Session: 2026-08-08-1550)
+- `PROMPTS.md` — logged team contribution & AI workflow documentation session (Session: 2026-08-08-1550)
 
 ---
 

@@ -37,6 +37,40 @@
 
 ## Session Log
 
+### Session 2026-08-08-1550 — Team contribution & AI workflow documentation
+
+**Objective**: Document the real human + AI development workflow used on this project — team contributions (Abhi Kashyap, Anuj Kumar), AI tool usage, and the human review process. Documentation only; no application code changes.
+
+**Prompt(s)**:
+> "Add proper team contribution and AI workflow documentation for ABTalks PS1. ... Create CONTRIBUTORS.md, create Docs/ai-workflow.md, update README.md (add Team section contributors), update PROMPTS.md (log this session). Do not modify application code. Do not create fake contributions or exaggerate roles. Keep existing project history and style consistent. Do not commit until review."
+
+**Result**:
+- **`CONTRIBUTORS.md`** (new): Documents team CTRL ALT NEXT, contributors (Abhi Kashyap — Lead Developer & Project Coordinator; Anuj Kumar — Technical Reviewer & AI Workflow Support), their roles, responsibilities, and contribution areas. Anuj is explicitly noted as supporting prompt preparation, review, feedback, and validation — not as the primary developer or feature owner.
+- **`Docs/ai-workflow.md`** (new): Documents AI tool usage (Claude Code for repository analysis, implementation assistance, validation reports, refactoring suggestions; ChatGPT for prompt preparation, architecture discussions, feature prioritization, review assistance) and the 7-step human review workflow (requirement understanding → prompt preparation → Claude Code implementation → lint/build validation → human review → decision approval → git commit/push). States explicitly that AI-generated output was reviewed before acceptance.
+- **`README.md`**: Team section extended to list both contributors and their roles, with pointers to `CONTRIBUTORS.md` and `Docs/ai-workflow.md`.
+- **`PROMPTS.md`**: logged this session.
+
+**Design decisions**:
+1. Contribution attribution is accurate and proportional — Abhi is the primary developer; Anuj's role is documented as prompt prep, review, and validation support only.
+2. AI workflow documented honestly — no fabricated sessions, no claims beyond what actually happened; the human review gate is explicit.
+3. Documentation lives where existing docs live (`Docs/`, `CONTRIBUTORS.md` at root alongside README).
+
+**Tests/Checks Performed**:
+- `git status` / `git diff` — confirmed documentation-only changes; no application source changed
+- Grepped added files for secrets/credentials — none
+- Verified contributor claims match the task brief (no exaggerated or invented roles)
+
+**Files Changed**:
+- `CONTRIBUTORS.md` — new
+- `Docs/ai-workflow.md` — new
+- `README.md` — Team section updated with contributors
+- `PROMPTS.md` — logged this session
+
+**Blockers / Open Questions**:
+- None — awaiting team review before commit (no commit made, per instructions)
+
+---
+
 ### Session 2026-08-08-12 — Challenge Day Implementation (Phase 6)
 
 **Objective**: Implement the `/day/[id]` challenge day experience with task explanation, build guidance, proof submission, and completion state.
