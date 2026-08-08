@@ -45,6 +45,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Portfolio mindset section reinforcing 60 artifacts outcome
   - Mobile-first responsive layout (390px target)
   - Uses Bento components, UI primitives, design tokens, Lucide icons
+- **Challenge Day Implementation (Phase 6)**:
+  - Dynamic /day/[id] route with /day/12 working
+  - Challenge header with day context and progress
+  - Task explanation: what to build, why it matters, expected outcome
+  - Build guidance with 5 student-friendly steps
+  - Proof submission form: GitHub repo/commit + LinkedIn post URLs
+  - Validation states with helpful error messages
+  - Completion state with submitted proof display
+  - Next-step guidance (dashboard / tomorrow preview)
+  - Mobile-first 390px design, portfolio-over-homework framing
+  - Uses existing Bento components, UI primitives, design tokens, Lucide icons
 
 ### Changed
 - `CLAUDE.md` rewritten to distinguish confirmed requirements, project decisions, proposed defaults, and unresolved questions (Session: 2026-08-08-02)
