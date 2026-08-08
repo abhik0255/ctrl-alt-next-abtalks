@@ -104,6 +104,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `README.md` — Team section lists contributors (Abhi Kashyap, Anuj Kumar) and links to CONTRIBUTORS.md / ai-workflow.md (Session: 2026-08-08-1550)
 - `PROMPTS.md` — logged team contribution & AI workflow documentation session (Session: 2026-08-08-1550)
 
+### Fixed
+- Responsive consistency fixes between dashboard and challenge day pages.
+- Fixed Day14 portfolio timeline milestone square highlight rendering issue.
+- Improved mobile viewport consistency across primary hackathon routes.
+
+### Added
+- **Phase9A: Pre-Submission UX Improvements**:
+  - Added first-day onboarding state with zero streak and zero artifacts.
+  - Added dynamic challenge routing using journey.currentDayNum.
+  - Added student identity display (avatar initials, name, cohort).
+  - Added artifact preview with clickable GitHub, commit, and LinkedIn links.
+  - Added copy-to-clipboard functionality for proof URLs.
+  - Improved demo scenario handling (ontrack, missed, firstday).
+  - Preserved Phase7B animations, responsiveness, and accessibility.
+
 ---
 
 ## Release Template

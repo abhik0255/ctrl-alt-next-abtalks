@@ -612,4 +612,94 @@ modified: CHANGELOG.md
 
 ---
 
+### Session 2026-08-09-0150 — Responsive Consistency Fix & Timeline Bug Resolution
+
+**Phase**: Phase9 Pre-Submission Polish — Responsive Bug Fixes
+
+**Objective**: Fix visual inconsistencies between dashboard and challenge day pages and remove timeline milestone rendering issues before Phase9 feature implementation.
+
+**Problem Identified**:
+- Challenge day page (/day/12) did not match dashboard responsive design system.
+- Dashboard portfolio timeline displayed an unwanted square highlight around Day14 milestone.
+
+**Implementation Summary**:
+- Aligned ChallengeDayClient container layout with dashboard spacing system.
+- Updated max-width, padding, and responsive breakpoints for consistent mobile-first experience.
+- Fixed milestone highlight wrapper shape by adding rounded-full to prevent square rendering artifact.
+- Preserved existing Framer Motion animations and reduced motion accessibility support.
+
+**Files Changed**:
+- `app/day/[id]/ChallengeDayClient.tsx`
+  - Updated page container responsive classes.
+
+- `components/bento/portfolio-timeline.tsx`
+  - Fixed milestone highlight wrapper styling.
+
+**Validation**:
+- `npm run lint` — passed ✅
+- `npm run build` — passed ✅
+- TypeScript validation passed ✅
+- Tested at 390px mobile viewport ✅
+
+**Result**:
+- Dashboard and Challenge Day now share consistent visual language.
+- Timeline milestone rendering fixed.
+- No Phase7B functionality affected.
+
+**Status**: Ready for Phase9A implementation.
+
+---
+
+### Session 2026-08-09-1400 — Phase9A: Pre-Submission UX Improvements & Judge Experience Polish
+
+**Phase**: Phase9A — First-Day Experience, Dynamic Journey, Artifact Preview & Submission UX
+
+**Objective**: Improve ABTalks PS1 hackathon submission experience by handling real student edge cases, improving proof submission workflow, and making the platform feel like a real portfolio-building experience.
+
+**Implementation Summary**:
+- Added first-day / empty profile experience.
+- Added zero streak and zero artifact handling.
+- Added dynamic challenge routing.
+- Added student identity display.
+- Added artifact preview after submission.
+- Added clickable GitHub, commit, and LinkedIn proof links.
+- Added copy-to-clipboard functionality.
+- Improved demo scenario handling.
+- Preserved Phase7B animations, responsiveness, and accessibility.
+
+**Files Changed**:
+- `data/student.ts`
+  - Added firstDayStudent mock profile.
+- `data/journey.ts`
+  - Added first-day journey helper.
+  - Added scenario-based journey handling.
+- `app/dashboard/page.tsx`
+  - Added student identity.
+  - Added first-day onboarding.
+  - Replaced hardcoded challenge routing.
+- `app/day/[id]/ChallengeDayClient.tsx`
+  - Added artifact preview.
+  - Added clickable proof links.
+  - Added copy actions.
+- `components/bento/missed-day-recovery.tsx`
+  - Added first-day scenario support.
+- `components/bento/achievements.tsx`
+  - Added scenario compatibility.
+- `components/bento/portfolio-timeline.tsx`
+  - Updated journey scenario handling.
+
+**Validation**:
+- `npm run lint` — passed ✅
+- `npm run build` — passed ✅
+- TypeScript validation passed ✅
+- 390px mobile testing completed ✅
+
+**Hackathon Requirements Covered**:
+- First day with no streak ✅
+- Empty profile handling ✅
+- Missed day handling preserved ✅
+- Proof submission workflow improved ✅
+
+---
+
 <!-- Append new sessions above this line, newest first -->
