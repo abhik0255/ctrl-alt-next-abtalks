@@ -9,6 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- Phase9B final UX polish:
+  - Fixed dashboard text rendering issues
+  - Fixed timeline milestone styling
+  - Added student onboarding experience
+  - Added centered global ABTalks navigation
+  - Improved demo artifact behavior
+  - Improved mobile judge experience
+
 ### Added
 - **Phase 8: P0 User Flow Verification & Navigation Cleanup** (Session: 2026-08-08):
   - Removed dead navigation routes `/community` and `/share` from dashboard
@@ -108,16 +117,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Responsive consistency fixes between dashboard and challenge day pages.
 - Fixed Day14 portfolio timeline milestone square highlight rendering issue.
 - Improved mobile viewport consistency across primary hackathon routes.
+- Student identity fallbacks removed (no fake "Aarav Mehta" or "Abhi Kashyap" in UI)
+- Dashboard conditional rendering — only shows Navbar + OnboardingModal until profile exists
+- Navbar consistency across all routes (centered branding, landing actions only on `/`)
+- Day12 artifact links use safe demo URLs (no external redirects)
 
 ### Added
-- **Phase9A: Pre-Submission UX Improvements**:
-  - Added first-day onboarding state with zero streak and zero artifacts.
-  - Added dynamic challenge routing using journey.currentDayNum.
-  - Added student identity display (avatar initials, name, cohort).
-  - Added artifact preview with clickable GitHub, commit, and LinkedIn links.
-  - Added copy-to-clipboard functionality for proof URLs.
-  - Improved demo scenario handling (ontrack, missed, firstday).
-  - Preserved Phase7B animations, responsiveness, and accessibility.
+- **Phase9B: Final Bug Fixes, Navigation Polish & Demo Readiness** (Session: 2026-08-09):
+  - Added student onboarding modal with name validation (alphabets + spaces only)
+  - Added localStorage-backed student profile hook with initials generation
+  - Added shared centered ABTalks Navbar (landing + app variants)
+  - Fixed JSX entity rendering issues across all pages
+  - Fixed Day14 milestone visual regression (oval highlight fix)
+  - Replaced external GitHub/LinkedIn placeholder links with safe Example.com demo URLs
+  - Improved mobile-first 390px experience across all routes
+- **Phase9A: Pre-Submission UX Improvements** (Session: 2026-08-09):
+  - Added first-day onboarding state with zero streak and zero artifacts
+  - Added dynamic challenge routing using journey.currentDayNum
+  - Added student identity display (avatar initials, name, cohort)
+  - Added artifact preview with clickable GitHub, commit, and LinkedIn links
+  - Added copy-to-clipboard functionality for proof URLs
+  - Improved demo scenario handling (ontrack, missed, firstday)
+  - Preserved Phase7B animations, responsiveness, and accessibility
+
+### Validation
+- `npm run lint` — passed ✅
+- `npm run build` — passed ✅ (6 pages compiled: /, /_not-found, /dashboard, /day/[id])
+- TypeScript validation passed ✅
+- 390px mobile viewport testing completed ✅
+- Responsive consistency verified across landing, dashboard, and challenge day
+- Accessibility: prefers-reduced-motion, semantic HTML, keyboard navigation ✅
 
 ---
 

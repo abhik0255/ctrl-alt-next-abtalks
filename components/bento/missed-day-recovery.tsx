@@ -5,16 +5,17 @@ import { BentoSection } from "@/components/bento/bento-section";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { AlertCircle, CheckCircle2, RotateCcw, ArrowRight } from "lucide-react";
-import { getJourneyData, getCurrentDayChallenge } from "@/data/journey";
+import { getJourneyDataForScenario, getCurrentDayChallenge, type DemoScenario } from "@/data/journey";
 
 interface MissedDayRecoveryProps {
-  demoState: "ontrack" | "missed";
-  onToggle: (state: "ontrack" | "missed") => void;
+  demoState: DemoScenario;
+  onToggle: (state: DemoScenario) => void;
 }
 
 export function MissedDayRecovery({ demoState, onToggle }: MissedDayRecoveryProps) {
   const isMissed = demoState === "missed";
-  const journey = getJourneyData(demoState);
+  const isFirstDay = demoState === "firstday";
+  const journey = getJourneyDataForScenario(demoState);
   const currentDay = getCurrentDayChallenge();
 
   return (
@@ -27,11 +28,11 @@ export function MissedDayRecovery({ demoState, onToggle }: MissedDayRecoveryProp
             <button
               onClick={() => onToggle("ontrack")}
               className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
-                !isMissed
+                demoState === "ontrack"
                   ? "bg-sage-drift text-white shadow-sm"
                   : "text-muted-foreground hover:text-foreground"
               }`}
-              aria-pressed={!isMissed}
+              aria-pressed={demoState === "ontrack"}
             >
               On Track
             </button>
@@ -45,6 +46,17 @@ export function MissedDayRecovery({ demoState, onToggle }: MissedDayRecoveryProp
               aria-pressed={isMissed}
             >
               Missed Day
+            </button>
+            <button
+              onClick={() => onToggle("firstday")}
+              className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
+                isFirstDay
+                  ? "bg-sage-drift/20 text-sage-drift shadow-sm"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+              aria-pressed={isFirstDay}
+            >
+              First Day
             </button>
           </div>
         </div>
@@ -68,8 +80,7 @@ export function MissedDayRecovery({ demoState, onToggle }: MissedDayRecoveryProp
                 <div className="flex-1">
                   <h3 className="text-lg font-semibold text-foreground">Day 11 was missed</h3>
                   <p className="text-sm text-muted-foreground mt-1">
-                    Life happens. One missed day doesn&apos;t erase your progress.
-                    Your streak pauses, but your portfolio keeps growing.
+                    {"Life happens. One missed day doesn't erase your progress. Your streak pauses, but your portfolio keeps growing."}
                   </p>
                 </div>
               </div>

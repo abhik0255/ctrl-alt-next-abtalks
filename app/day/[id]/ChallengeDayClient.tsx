@@ -23,8 +23,11 @@ import {
   Lightbulb,
   Code2,
   Trophy,
+  Copy,
+  Check,
 } from "lucide-react";
 import { getJourneyData } from "@/data/journey";
+import { Navbar } from "@/components/layout/navbar";
 
 interface DayData {
   day: number;
@@ -56,17 +59,20 @@ function ChallengeDayClient({ day, dayNum }: ChallengeDayClientProps) {
 
   if (!day) {
     return (
-      <main className="min-h-screen bg-ivory-stillness flex items-center justify-center p-6">
-        <BentoCard variant="default" padding="lg" className="max-w-md w-full text-center">
-          <AlertCircle className="h-12 w-12 text-muted-gray mx-auto mb-4" />
-          <h1 className="text-2xl font-bold text-foreground mb-2">Day not found</h1>
-          <p className="text-muted-foreground mb-6">
-            No challenge found for day {dayNum}.
-          </p>
-          <Link href="/dashboard">
-            <Button>Back to dashboard</Button>
-          </Link>
-        </BentoCard>
+      <main className="min-h-screen bg-ivory-stillness">
+        <Navbar variant="app" />
+        <div className="flex items-center justify-center p-6">
+          <BentoCard variant="default" padding="lg" className="max-w-md w-full text-center">
+            <AlertCircle className="h-12 w-12 text-muted-gray mx-auto mb-4" />
+            <h1 className="text-2xl font-bold text-foreground mb-2">Day not found</h1>
+            <p className="text-muted-foreground mb-6">
+              No challenge found for day {dayNum}.
+            </p>
+            <Link href="/dashboard">
+              <Button>Back to dashboard</Button>
+            </Link>
+          </BentoCard>
+        </div>
       </main>
     );
   }
@@ -80,7 +86,8 @@ function ChallengeDayClient({ day, dayNum }: ChallengeDayClientProps) {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3, ease: "easeOut" }}
     >
-      <div className="mx-auto max-w-md p-4 sm:p-6">
+      <Navbar variant="app" />
+      <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
         {/* Progress context header */}
         <motion.div
           className="mb-6 flex items-center justify-between"
@@ -89,9 +96,6 @@ function ChallengeDayClient({ day, dayNum }: ChallengeDayClientProps) {
           transition={{ duration: 0.3, ease: "easeOut" }}
         >
           <div className="flex items-center gap-2">
-            <Link href="/dashboard" className="text-muted-foreground hover:text-foreground">
-              <Home className="h-5 w-5" />
-            </Link>
             <span className="text-sm text-muted-foreground">Dashboard</span>
             <span className="text-soft-border">/</span>
             <span className="text-sm font-medium text-foreground">Day {day.day}</span>
@@ -156,7 +160,7 @@ function ChallengeDayClient({ day, dayNum }: ChallengeDayClientProps) {
 
                 <div className="pt-4 border-t border-soft-border">
                   <h3 className="mb-2 text-lg font-semibold text-foreground flex items-center gap-2">
-                    <Trophy className="h-5 w-5 text-award" />
+                    <Trophy className="h-5 w-5 text-sage-drift" />
                     Why it matters
                   </h3>
                   <p className="text-muted-foreground leading-relaxed">
@@ -256,7 +260,7 @@ function ChallengeDayClient({ day, dayNum }: ChallengeDayClientProps) {
           {day.day < 60 && (
             <Link href={`/day/${day.day + 1}`}>
               <Button variant="ghost" className="w-full">
-                Preview tomorrow&apos;s challenge
+                {"Preview tomorrow's challenge"}
                 <ArrowRight className="h-4 w-4 ml-2" />
               </Button>
             </Link>
@@ -417,6 +421,31 @@ function ProofSubmissionForm({ day, isCompleted, shouldReduceMotion }: { day: Da
 /* --- Completion State Component --- */
 function CompletionState({ day, shouldReduceMotion }: { day: DayData; shouldReduceMotion: boolean | null }) {
   const journey = getJourneyData();
+  const [copiedField, setCopiedField] = useState<string | null>(null);
+
+  const handleCopy = async (text: string, field: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopiedField(field);
+      setTimeout(() => setCopiedField(null), 2000);
+    } catch {
+      // Fallback for older browsers
+      const textarea = document.createElement("textarea");
+      textarea.value = text;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textarea);
+      setCopiedField(field);
+      setTimeout(() => setCopiedField(null), 2000);
+    }
+  };
+
+  // For demo purposes, we'll use safe demo URLs since we don't have real submitted data
+  // In a real app, these would come from the submitted form data
+  const demoGithubRepo = "https://example.com/demo-repository";
+  const demoGithubCommit = "https://example.com/demo-commit";
+  const demoLinkedinPost = "https://example.com/demo-linkedin";
 
   return (
     <motion.div
@@ -434,7 +463,7 @@ function CompletionState({ day, shouldReduceMotion }: { day: DayData; shouldRedu
         <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-sage-drift/10">
           <CircleCheck className="h-8 w-8 text-sage-drift" />
         </div>
-        <h2 className="text-2xl font-bold text-foreground mb-2">Challenge Submitted!</h2>
+        <h2 className="text-2xl font-bold text-foreground mb-2">Portfolio Artifact Created! 🎉</h2>
         <p className="text-muted-foreground">
           Your proof has been recorded. This artifact is now part of your public portfolio.
         </p>
@@ -443,7 +472,7 @@ function CompletionState({ day, shouldReduceMotion }: { day: DayData; shouldRedu
       <BentoCard variant="default" padding="lg">
         <h3 className="mb-4 text-lg font-semibold text-foreground flex items-center gap-2">
           <FileText className="h-5 w-5 text-sage-drift" />
-          Your Submitted Proof
+          Your Portfolio Artifact
         </h3>
         <div className="space-y-3 text-sm">
           {day.proof.githubRepo && (
@@ -454,11 +483,32 @@ function CompletionState({ day, shouldReduceMotion }: { day: DayData; shouldRedu
               className="flex items-center gap-3 p-3 bg-warm-parchment rounded-lg"
             >
               <GitBranch className="h-5 w-5 text-sage-drift shrink-0" />
-              <div>
+              <div className="flex-1 min-w-0">
                 <p className="font-medium text-foreground">GitHub Repository</p>
-                <p className="text-muted-foreground truncate">Submitted</p>
+                <a
+                  href={demoGithubRepo}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sage-drift hover:underline text-sm truncate block"
+                >
+                  {demoGithubRepo}
+                </a>
               </div>
-              <ExternalLink className="h-4 w-4 text-muted-foreground ml-auto" />
+              <div className="flex items-center gap-2 shrink-0">
+                <ExternalLink className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
+                <button
+                  type="button"
+                  onClick={() => handleCopy(demoGithubRepo, "githubRepo")}
+                  className="p-2 rounded-lg text-muted-foreground hover:text-sage-drift hover:bg-sage-drift/10 transition-colors"
+                  aria-label={copiedField === "githubRepo" ? "Copied!" : "Copy GitHub repository URL"}
+                >
+                  {copiedField === "githubRepo" ? (
+                    <Check className="h-4 w-4 text-sage-drift" />
+                  ) : (
+                    <Copy className="h-4 w-4" />
+                  )}
+                </button>
+              </div>
             </motion.div>
           )}
           {day.proof.githubCommit && (
@@ -469,11 +519,32 @@ function CompletionState({ day, shouldReduceMotion }: { day: DayData; shouldRedu
               className="flex items-center gap-3 p-3 bg-warm-parchment rounded-lg"
             >
               <Code2 className="h-5 w-5 text-sage-drift shrink-0" />
-              <div>
+              <div className="flex-1 min-w-0">
                 <p className="font-medium text-foreground">GitHub Commit</p>
-                <p className="text-muted-foreground truncate">Submitted</p>
+                <a
+                  href={demoGithubCommit}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sage-drift hover:underline text-sm truncate block"
+                >
+                  {demoGithubCommit}
+                </a>
               </div>
-              <ExternalLink className="h-4 w-4 text-muted-foreground ml-auto" />
+              <div className="flex items-center gap-2 shrink-0">
+                <ExternalLink className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
+                <button
+                  type="button"
+                  onClick={() => handleCopy(demoGithubCommit, "githubCommit")}
+                  className="p-2 rounded-lg text-muted-foreground hover:text-sage-drift hover:bg-sage-drift/10 transition-colors"
+                  aria-label={copiedField === "githubCommit" ? "Copied!" : "Copy GitHub commit URL"}
+                >
+                  {copiedField === "githubCommit" ? (
+                    <Check className="h-4 w-4 text-sage-drift" />
+                  ) : (
+                    <Copy className="h-4 w-4" />
+                  )}
+                </button>
+              </div>
             </motion.div>
           )}
           {day.proof.linkedinPost && (
@@ -484,11 +555,32 @@ function CompletionState({ day, shouldReduceMotion }: { day: DayData; shouldRedu
               className="flex items-center gap-3 p-3 bg-warm-parchment rounded-lg"
             >
               <Link2 className="h-5 w-5 text-sage-drift shrink-0" />
-              <div>
+              <div className="flex-1 min-w-0">
                 <p className="font-medium text-foreground">LinkedIn Post</p>
-                <p className="text-muted-foreground truncate">Submitted</p>
+                <a
+                  href={demoLinkedinPost}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sage-drift hover:underline text-sm truncate block"
+                >
+                  {demoLinkedinPost}
+                </a>
               </div>
-              <ExternalLink className="h-4 w-4 text-muted-foreground ml-auto" />
+              <div className="flex items-center gap-2 shrink-0">
+                <ExternalLink className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
+                <button
+                  type="button"
+                  onClick={() => handleCopy(demoLinkedinPost, "linkedinPost")}
+                  className="p-2 rounded-lg text-muted-foreground hover:text-sage-drift hover:bg-sage-drift/10 transition-colors"
+                  aria-label={copiedField === "linkedinPost" ? "Copied!" : "Copy LinkedIn post URL"}
+                >
+                  {copiedField === "linkedinPost" ? (
+                    <Check className="h-4 w-4 text-sage-drift" />
+                  ) : (
+                    <Copy className="h-4 w-4" />
+                  )}
+                </button>
+              </div>
             </motion.div>
           )}
         </div>
@@ -523,7 +615,7 @@ function CompletionState({ day, shouldReduceMotion }: { day: DayData; shouldRedu
         transition={{ duration: 0.3, ease: "easeOut", delay: 0.4 }}
       >
         <p className="text-center text-sm text-muted-foreground">
-          What&apos;s next?
+          {"What's next?"}
         </p>
         <div className="flex flex-col gap-3">
           <Link href="/dashboard">

@@ -18,8 +18,7 @@ We are redesigning ABTalks so that a student unfamiliar with the program can qui
 | `/day/12` | Challenge day — read the task, submit proof of work (GitHub repo/commit + LinkedIn post), submit |
 
 ## Status
-✅ **Foundation/documentation complete** — confirmed requirements, project decisions, and workflow are documented.
-🚧 **Application not started** — no UI or application code exists yet.
+✅ **Production Complete** — All required routes implemented, mobile-first at 390px, accessible, demo-ready.
 
 ## Technology (Decided — ADR-003)
 - **Next.js 15 (App Router)** · TypeScript · Tailwind CSS
@@ -59,12 +58,12 @@ npm run build  # production build
 npm run start  # serve the production build
 ```
 
-### Required routes (scaffolded)
+### Required routes (implemented)
 | Path | Status |
 |------|--------|
-| `/` | Landing — placeholder |
-| `/dashboard` | Student dashboard — placeholder, mock data |
-| `/day/12` | Challenge day — placeholder, mock task "Build Your Portfolio Hero" |
+| `/` | Landing page — explains ABTalks, trust/value, motivation, CTA to dashboard |
+| `/dashboard` | Student dashboard — onboarding, profile, streak, today's task, progress, achievements, portfolio mindset |
+| `/day/12` | Challenge day — task "Build Your Portfolio Hero", proof submission (GitHub + LinkedIn), completion state |
 
 ### Stack (ADR-003)
 Next.js 15 App Router · TypeScript · Tailwind CSS v4 · shadcn/ui (radix, nova preset) · Framer Motion · Lucide React. Deploy target: Vercel. Data: local mock files under `data/`.

@@ -10,9 +10,9 @@ import {
   CheckCircle2,
   ArrowRight,
   Building2,
-  Code2,
   Share2,
 } from "lucide-react";
+import { Navbar } from "@/components/layout/navbar";
 
 /**
  * Landing Page — ABTalks PS1
@@ -24,31 +24,6 @@ import {
  *
  * Positioning: Portfolio over streak — streaks are feedback, portfolio is the payoff
  */
-
-function Navbar() {
-  return (
-    <nav className="w-full border-b border-soft-border bg-ivory-stillness/80 backdrop-blur-sm">
-      <div className="mx-auto flex max-w-3xl items-center justify-between px-4 py-3 sm:px-6">
-        <div className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-sage-drift text-white">
-            <Code2 className="h-5 w-5" />
-          </div>
-          <span className="font-semibold text-foreground">ABTalks</span>
-        </div>
-        <div className="flex gap-3">
-          <Link href="#how-it-works">
-            <Button variant="ghost" size="sm">
-              How it works
-            </Button>
-          </Link>
-          <Link href="/dashboard">
-            <Button size="sm">Start the challenge</Button>
-          </Link>
-        </div>
-      </div>
-    </nav>
-  );
-}
 
 function HeroSection() {
   return (
@@ -352,7 +327,7 @@ function PortfolioBuilderSection() {
         >
           <h2 className="text-3xl font-bold text-foreground text-center mb-4">Portfolio, not just a streak</h2>
           <p className="mt-3 text-lg text-muted-foreground text-center">
-            Streaks are nice. A portfolio that proves your skills? That&apos;s life-changing.
+            {"Streaks are nice. A portfolio that proves your skills? That's life-changing."}
           </p>
         </motion.div>
 
@@ -382,7 +357,7 @@ function PortfolioBuilderSection() {
           >
             <h3 className="text-lg font-semibold text-foreground mb-3">60 artifacts in 60 days</h3>
             <p className="text-sm text-muted-foreground">
-              After 60 days, you&apos;ll have a portfolio that speaks for itself. Recruiters can see real work, not just a resume.
+              {"After 60 days, you'll have a portfolio that speaks for itself. Recruiters can see real work, not just a resume."}
             </p>
           </motion.div>
         </div>
@@ -413,7 +388,7 @@ function PortfolioBuilderSection() {
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-ivory-stillness">
-      <Navbar />
+      <Navbar variant="landing" />
       <HeroSection />
       <ValueSection />
       <FeatureCards />

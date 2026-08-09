@@ -3,7 +3,7 @@
 // Used by landing, dashboard, and day pages.
 
 import { challengeDays, type ChallengeDay, getChallengeDay } from "./challenges";
-import { student } from "./student";
+import { student, firstDayStudent } from "./student";
 import { achievements, type Achievement } from "./achievements";
 
 export type DayState = "completed" | "current" | "upcoming" | "missed";
@@ -132,6 +132,62 @@ export function getJourneyData(demoState: "ontrack" | "missed" = "ontrack"): Jou
   };
 }
 
+// First-day / empty profile journey (new student, no progress)
+export function getFirstDayJourney(): JourneyData {
+  const totalCompleted = 0;
+  const currentDayNum = firstDayStudent.currentDay;
+  const progressPercent = 0;
+
+  const days: JourneyDay[] = challengeDays.map((challenge: ChallengeDay) => {
+    const dayNum = challenge.day;
+    let state: DayState = "upcoming";
+
+    if (dayNum === currentDayNum) {
+      state = "current";
+    }
+
+    return {
+      day: dayNum,
+      title: challenge.title,
+      summary: challenge.summary,
+      state,
+      proofSubmitted: undefined,
+      artifactCard: undefined,
+    };
+  });
+
+  const milestones: Milestone[] = MILESTONES.map((m) => ({
+    ...m,
+    achieved: false,
+  }));
+
+  return {
+    student: firstDayStudent,
+    progressPercent,
+    days,
+    milestones,
+    artifactsCreated: totalCompleted,
+    totalDays: 60,
+    currentDayNum,
+  };
+}
+
+// Demo scenario types
+export type DemoScenario = "ontrack" | "missed" | "firstday";
+
+// Get journey data for any demo scenario
+export function getJourneyDataForScenario(scenario: DemoScenario): JourneyData {
+  switch (scenario) {
+    case "firstday":
+      return getFirstDayJourney();
+    case "missed":
+      return getJourneyData("missed");
+    case "ontrack":
+    default:
+      return getJourneyData("ontrack");
+  }
+}
+
 // Achievement with unlock progress
 export type AchievementWithProgress = Achievement & {
   progress?: number; // 0-100 progress toward unlock
@@ -139,10 +195,10 @@ export type AchievementWithProgress = Achievement & {
 };
 
 export function getAchievementsWithProgress(
-  demoState: "ontrack" | "missed" = "ontrack"
+  demoState: "ontrack" | "missed" | "firstday" = "ontrack"
 ): AchievementWithProgress[] {
-  const currentDayNum = demoState === "missed" ? student.currentDay : student.currentDay;
-  const totalCompleted = demoState === "missed" ? student.totalCompleted - 1 : student.totalCompleted;
+  const currentDayNum = demoState === "firstday" ? 1 : (demoState === "missed" ? student.currentDay : student.currentDay);
+  const totalCompleted = demoState === "firstday" ? 0 : (demoState === "missed" ? student.totalCompleted - 1 : student.totalCompleted);
 
   return achievements.map((a) => {
     let progress: number | undefined;
@@ -180,7 +236,7 @@ export function getAchievementsWithProgress(
 
 // Get next achievement info
 export function getNextAchievement(
-  demoState: "ontrack" | "missed" = "ontrack"
+  demoState: "ontrack" | "missed" | "firstday" = "ontrack"
 ): { achievement: AchievementWithProgress; message: string } | null {
   const achievementsWithProgress = getAchievementsWithProgress(demoState);
   const locked = achievementsWithProgress.filter((a) => !a.unlocked);

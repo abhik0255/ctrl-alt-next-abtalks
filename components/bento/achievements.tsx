@@ -9,10 +9,11 @@ import {
   getAchievementsWithProgress,
   getNextAchievement,
   type AchievementWithProgress,
+  type DemoScenario,
 } from "@/data/journey";
 
 interface AchievementsProps {
-  demoState?: "ontrack" | "missed";
+  demoState?: DemoScenario;
 }
 
 function AchievementItem({ achievement }: { achievement: AchievementWithProgress }) {

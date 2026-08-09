@@ -30,6 +30,18 @@ export const student: Student = {
   standing: "Top 15% of cohort",
 };
 
-// Edge-case states (first day / no streak, missed day, empty profile) are UI
-// concerns for the dashboard build phase; this mock profile represents the
-// "active on day 12" happy path.
+// Edge-case profile — brand-new student (day 1, no streak, empty portfolio).
+// Represents the "first day / no streak / empty profile" state required by PS1.
+export const firstDayStudent: Student = {
+  id: "stu_mock_firstday",
+  name: "Priya Sharma",
+  avatarInitials: "PS",
+  cohort: "ABTalks Cohort — Mock 2026",
+  startDate: "2026-08-09",
+  currentDay: 1,
+  streak: 0,
+  bestStreak: 0,
+  totalCompleted: 0,
+  daysMissed: 0,
+  standing: "Just getting started",
+};

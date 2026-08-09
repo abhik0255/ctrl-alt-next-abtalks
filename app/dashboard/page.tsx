@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -14,8 +14,11 @@ import {
   ArrowRight,
   Share2,
 } from "lucide-react";
-import { getJourneyData } from "@/data/journey";
+import { getJourneyDataForScenario, type DemoScenario } from "@/data/journey";
 import { motion } from "framer-motion";
+import { Navbar } from "@/components/layout/navbar";
+import { StudentOnboardingModal } from "@/components/student/StudentOnboardingModal";
+import { useStudentProfile, loadStudentProfile, getInitials } from "@/lib/student-profile";
 
 /**
  * Dashboard Page — ABTalks PS1
@@ -31,8 +34,51 @@ import { motion } from "framer-motion";
  */
 
 function DashboardPage() {
-  const [demoState, setDemoState] = useState<"ontrack" | "missed">("ontrack");
-  const journey = getJourneyData(demoState);
+  const [demoState, setDemoState] = useState<DemoScenario>("ontrack");
+  const { profile, isLoaded, setName } = useStudentProfile();
+
+  // Show onboarding on first visit: once the profile is loaded from localStorage,
+  // if no real student name was ever saved, prompt the student to enter one.
+  const [showModal, setShowModal] = useState(false);
+
+  useEffect(() => {
+    if (!isLoaded) return;
+    const stored = loadStudentProfile();
+    // No stored profile → first visit → show onboarding
+    setShowModal(!stored);
+  }, [isLoaded]);
+
+  const journey = getJourneyDataForScenario(demoState);
+
+  // Student identity - only available after profile is created
+  const studentName = profile?.name;
+  const avatarInitialsDisplay = studentName ? getInitials(studentName) : null;
+
+  // Handle onboarding completion
+  const handleNameComplete = (name: string) => {
+    if (name) {
+      setName(name); // updates state + persists to localStorage
+    }
+    setShowModal(false);
+  };
+
+  // If no profile exists, render ONLY Navbar + mandatory onboarding modal
+  if (!profile || !isLoaded) {
+    return (
+      <motion.main
+        className="min-h-screen bg-ivory-stillness"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.3, ease: "easeOut" }}
+      >
+        <Navbar variant="app" />
+        <StudentOnboardingModal
+          isOpen={showModal}
+          onComplete={handleNameComplete}
+        />
+      </motion.main>
+    );
+  }
 
   return (
     <motion.main
@@ -41,6 +87,7 @@ function DashboardPage() {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3, ease: "easeOut" }}
     >
+      <Navbar variant="app" />
       <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
         <motion.div
           className="flex items-center justify-between mb-6"
@@ -48,9 +95,15 @@ function DashboardPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.1, ease: "easeOut" }}
         >
-          <h1 className="text-2xl font-bold text-foreground">
-            Dashboard
-          </h1>
+          <div className="flex items-center gap-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-sage-drift/10">
+              <span className="text-sm font-semibold text-sage-drift">{avatarInitialsDisplay}</span>
+            </div>
+            <div>
+              <h1 className="text-2xl font-bold text-foreground">Dashboard</h1>
+              <p className="text-sm text-muted-foreground">{studentName} • {journey.student.cohort}</p>
+            </div>
+          </div>
           <div className="flex items-center gap-2">
             <Badge variant="secondary">
               Day {journey.currentDayNum} of 60
@@ -67,7 +120,10 @@ function DashboardPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.2, ease: "easeOut" }}
         >
-          <BentoSection title="Today's Challenge" description="Your focus for today">
+          <BentoSection
+            title="Today's Challenge"
+            description={journey.artifactsCreated === 0 ? "Welcome to your 60-day journey" : "Your focus for today"}
+          >
             <BentoCard variant="accent" className="mb-6 p-6">
               <motion.div
                 className="flex items-start gap-4"
@@ -90,7 +146,7 @@ function DashboardPage() {
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.3, delay: 0.4 }}
                   >
-                    Build Your Portfolio Hero
+                    {journey.artifactsCreated === 0 ? "Start Your First Challenge" : journey.days.find(d => d.state === "current")?.title ?? "Build Your Portfolio Hero"}
                   </motion.h2>
                   <motion.p
                     className="text-muted-foreground"
@@ -98,7 +154,9 @@ function DashboardPage() {
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.3, delay: 0.5 }}
                   >
-                    Design and build the hero (landing header) of your personal portfolio
+                    {journey.artifactsCreated === 0
+                      ? "Your first artifact starts today. Complete Day 1 to begin building your portfolio."
+                      : journey.days.find(d => d.state === "current")?.summary ?? "Design and build the hero (landing header) of your personal portfolio"}
                   </motion.p>
                   <motion.p
                     className="text-sm text-muted-foreground"
@@ -106,9 +164,9 @@ function DashboardPage() {
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.3, delay: 0.6 }}
                   >
-                    Design and build the hero (landing header) of your personal portfolio — who you are,
-                    what you build, and one clear call to action. Make it readable at 390px. Ship it to a
-                    public GitHub repo, link your commit, and post a short update on LinkedIn.
+                    {journey.artifactsCreated === 0
+                      ? "Day 1 is designed to be a gentle start. No experience needed — just show up and build."
+                      : "Design and build the hero (landing header) of your personal portfolio — who you are, what you build, and one clear call to action. Make it readable at 390px. Ship it to a public GitHub repo, link your commit, and post a short update on LinkedIn."}
                   </motion.p>
                   <motion.div
                     className="mt-4"
@@ -116,7 +174,7 @@ function DashboardPage() {
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.3, delay: 0.7 }}
                   >
-                    <Link href="/day/12">
+                    <Link href={`/day/${journey.currentDayNum}`}>
                       <motion.div
                         whileHover={{ scale: 1.02, y: -2 }}
                         whileTap={{ scale: 0.98 }}
@@ -127,7 +185,7 @@ function DashboardPage() {
                           size="lg"
                           className="w-full transition-all duration-200"
                         >
-                          Open today&apos;s challenge
+                          {journey.artifactsCreated === 0 ? "Start Day 1" : "Open today's challenge"}
                           <ArrowRight className="h-4 w-4 ml-2" />
                         </Button>
                       </motion.div>
@@ -281,7 +339,7 @@ function DashboardPage() {
                   {journey.artifactsCreated} of 60 portfolio pieces complete
                 </p>
                 <p className="text-sm text-muted-foreground">
-                  After 60 days, you&apos;ll have a portfolio that speaks for itself.
+                  {"After 60 days, you'll have a portfolio that speaks for itself."}
                 </p>
               </motion.div>
               <motion.div
@@ -327,7 +385,7 @@ function DashboardPage() {
               >
                 <Button size="sm" variant="outline">
                   <Share2 className="h-4 w-4 mr-1" />
-                  Share today&apos;s work
+                  {"Share today's work"}
                 </Button>
               </motion.div>
             </Link>

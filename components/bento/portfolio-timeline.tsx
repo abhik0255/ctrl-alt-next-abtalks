@@ -17,7 +17,7 @@ import {
   Trophy,
   ChevronRight,
 } from "lucide-react";
-import { JourneyDay, getJourneyData, getCurrentDayChallenge } from "@/data/journey";
+import { JourneyDay, getJourneyDataForScenario, getCurrentDayChallenge, type DemoScenario } from "@/data/journey";
 
 // Icon mapping
 const iconMap: Record<string, React.ElementType> = {
@@ -81,11 +81,11 @@ function ArtifactCard({ day, isCompact = false }: { day: JourneyDay; isCompact?:
 }
 
 interface PortfolioTimelineProps {
-  demoState?: "ontrack" | "missed";
+  demoState?: DemoScenario;
 }
 
 export function PortfolioTimeline({ demoState = "ontrack" }: PortfolioTimelineProps) {
-  const journey = getJourneyData(demoState);
+  const journey = getJourneyDataForScenario(demoState);
   const currentDay = getCurrentDayChallenge();
 
   // Group days by week for compact display
