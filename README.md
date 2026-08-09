@@ -46,6 +46,9 @@ We are redesigning ABTalks so that a student unfamiliar with the program can qui
 | `Docs/decisions.md` | Architecture Decision Records (ADRs) |
 | `Docs/development-workflow.md` | Development process and conventions |
 
+## Project Presentation
+- **Final Hackathon Presentation**: [ABTalks-60-Day-Challenge-Final-Presentation.pptx](./ABTalks-60-Day-Challenge-Final-Presentation.pptx)
+
 ## Getting Started
 
 Requires Node.js 20+ (developed on Node 24 / npm 11).
